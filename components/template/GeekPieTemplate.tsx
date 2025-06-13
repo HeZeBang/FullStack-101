@@ -14,8 +14,9 @@ import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { SlidesProps } from "@/app/types/Slides";
+import { EXTRA, SUBTITLE, TITLE } from "@/lib/consts";
 
-const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
+const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
   const [swiperInstance, setSwiperInstance] = React.useState<SwiperClass | null>(null);
   const nextBtn = React.useRef<HTMLDivElement>(null);
   const prevBtn = React.useRef<HTMLDivElement>(null);
@@ -71,13 +72,6 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
             autoplay={false}
             loop={false}
             hashNavigation={true}
-            // virtual={{
-            // enabled: true,
-            // cache: false,
-            // addSlidesBefore: 0,
-            // addSlidesAfter: 0,
-            // slides: data.map(() => (<SwiperSlide><span>123</span></SwiperSlide>)),
-            // }}
             virtual
             modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation, Virtual]}
           >
@@ -92,17 +86,17 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
               </div>
             </div>
             <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden" virtualIndex={0}>
-              <div className="items-start justify-center flex w-full h-full gap-5 flex-col">
+              <div className="items-start justify-center flex w-full h-full gap-3 flex-col">
                 <h1 className="text-7xl font-extrabold z-20">
-                  Fullstack 101
+                  {props.title || TITLE}
                 </h1>
-                <h2><s>又名: 想和我写一辈子 Web 全栈开发吗（又看一集）</s></h2>
-                <span className="text-3xl">A Coffee With Pie / GeekPie_</span>
+                <h2 className="text-3xl">{props.subtitle || SUBTITLE}</h2>
+                <span className="text-2xl text-muted-foreground">{props.extra || EXTRA}</span>
               </div>
               <Universe />
             </SwiperSlide>
             {
-              data.map((slide, index) => (
+              props.data.map((slide, index) => (
                 <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-14 overflow-auto")} virtualIndex={index + 1}>
                   {slide.content && slide.title && <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>}
                   {slide.content && slide.subtitle && <h3 className="text-3xl text-muted-foreground mb-4 sticky">{slide.subtitle}</h3>}
@@ -119,12 +113,12 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
                 </SwiperSlide>
               ))
             }
-            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden" virtualIndex={data.length + 1}>
+            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden" virtualIndex={props.data.length + 1}>
               <div className="items-start justify-center flex w-full h-full gap-5 flex-col">
                 <h1 className="text-7xl font-extrabold z-20">
                   Thanks for watching!
                 </h1>
-                <span className="text-3xl">A Coffee With Pie / GeekPie_</span>
+                <span className="text-2xl text-muted-foreground">{props.extra || EXTRA}</span>
               </div>
               <Universe />
             </SwiperSlide>

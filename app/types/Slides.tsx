@@ -9,4 +9,7 @@ export interface SlideT {
 
 export interface SlidesProps {
   data: SlideT[];
+  title?: string;
+  extra?: string;
+  subtitle?: string;
 }

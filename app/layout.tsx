@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { DESCRIPTION, TITLE } from "@/lib/consts";
 
 const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({
@@ -11,9 +12,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "NextJS 13 with Swiper Slider",
-  description:
-    "Represents a small example of Swiper Slider implemented in NextJS 13",
+  title: TITLE,
+  description: DESCRIPTION,
 };
 
 export default function RootLayout({
