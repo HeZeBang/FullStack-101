@@ -1,7 +1,7 @@
 import MDBlock from "@/components/MdBlock";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { Chrome, CodeXml, Database, Globe, Rocket } from "lucide-react";
-import { SlideT } from "../types/Slides";
+import { SlideT } from "../../lib/props";
 
 const timelineData = [
   {

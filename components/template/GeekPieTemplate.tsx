@@ -13,7 +13,7 @@ import Universe from "@/components/magicui/universe";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
-import { SlidesProps } from "@/app/types/Slides";
+import { SlidesProps } from "@/lib/props";
 import { EXTRA, SUBTITLE, TITLE } from "@/lib/consts";
 
 const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
