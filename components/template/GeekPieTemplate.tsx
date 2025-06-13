@@ -90,8 +90,8 @@ const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
                 <h1 className="text-7xl font-extrabold z-20">
                   {props.title || TITLE}
                 </h1>
-                <h2 className="text-3xl">{props.subtitle || SUBTITLE}</h2>
-                <span className="text-2xl text-muted-foreground">{props.extra || EXTRA}</span>
+                <h2 className="text-3xl z-20">{props.subtitle || SUBTITLE}</h2>
+                <span className="text-2xl text-muted-foreground z-20">{props.extra || EXTRA}</span>
               </div>
               <Universe />
             </SwiperSlide>
@@ -118,7 +118,7 @@ const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
                 <h1 className="text-7xl font-extrabold z-20">
                   Thanks for watching!
                 </h1>
-                <span className="text-2xl text-muted-foreground">{props.extra || EXTRA}</span>
+                <span className="text-2xl text-muted-foreground z-20">{props.extra || EXTRA}</span>
               </div>
               <Universe />
             </SwiperSlide>

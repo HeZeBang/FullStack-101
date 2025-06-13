@@ -9,7 +9,7 @@ export interface SlideT {
 
 export interface SlidesProps {
   data: SlideT[];
-  title?: string;
-  extra?: string;
-  subtitle?: string;
+  title?: string | ReactNode;
+  extra?: string | ReactNode;
+  subtitle?: string | ReactNode;
 }
