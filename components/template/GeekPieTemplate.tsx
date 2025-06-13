@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect } from "react";
 
 // Swiper components, modules and styles
-import { Autoplay, EffectCards, EffectCoverflow, HashNavigation, Keyboard, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, EffectCards, EffectCoverflow, HashNavigation, Keyboard, Navigation, Pagination, Virtual } from "swiper/modules";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -66,12 +66,20 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
             }}
             pagination={{ type: "progressbar", clickable: true }}
             keyboard={{ enabled: true, }}
-            effect="cards"
-            speed={500}
+            // effect="cards"
+            // speed={500}
             autoplay={false}
             loop={false}
             hashNavigation={true}
-            modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation]}
+            // virtual={{
+              // enabled: true,
+              // cache: false,
+              // addSlidesBefore: 0,
+              // addSlidesAfter: 0,
+              // slides: data.map(() => (<SwiperSlide><span>123</span></SwiperSlide>)),
+            // }}
+            virtual
+            modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation, Virtual]}
           >
             <div className="absolute right-5 bottom-5 z-10 rounded-full bg-[#f0f0f0aa] backdrop:blur-md p-2 flex items-center gap-2 border-outline border backdrop-blur-xl backdrop-saturate-200">
               <div ref={prevBtn} className="cursor-pointer">
@@ -83,7 +91,7 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
                 <ChevronRight className="aspect-square w-7 h-7 rounded-full p-1 border hover:bg-white active:scale-95 transition-all" />
               </div>
             </div>
-            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden">
+            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden" virtualIndex={0}>
               <div className="items-start justify-center flex w-full h-full gap-5 flex-col">
                 <h1 className="text-7xl font-extrabold z-20">
                   Fullstack 101
@@ -95,13 +103,13 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
             </SwiperSlide>
             {
               data.map((slide, index) => (
-                <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-14 overflow-auto")}>
+                <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-14 overflow-auto")} virtualIndex={index + 1}>
                   <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>
                   {slide.content}
                 </SwiperSlide>
               ))
             }
-            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden">
+            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden" virtualIndex={data.length + 1}>
               <div className="items-start justify-center flex w-full h-full gap-5 flex-col">
                 <h1 className="text-7xl font-extrabold z-20">
                   Thanks for watching!
