@@ -72,11 +72,11 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
             loop={false}
             hashNavigation={true}
             // virtual={{
-              // enabled: true,
-              // cache: false,
-              // addSlidesBefore: 0,
-              // addSlidesAfter: 0,
-              // slides: data.map(() => (<SwiperSlide><span>123</span></SwiperSlide>)),
+            // enabled: true,
+            // cache: false,
+            // addSlidesBefore: 0,
+            // addSlidesAfter: 0,
+            // slides: data.map(() => (<SwiperSlide><span>123</span></SwiperSlide>)),
             // }}
             virtual
             modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation, Virtual]}
@@ -104,8 +104,18 @@ const Slides: React.FC<SlidesProps> = ({ data }: SlidesProps) => {
             {
               data.map((slide, index) => (
                 <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-14 overflow-auto")} virtualIndex={index + 1}>
-                  <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>
-                  {slide.content}
+                  {slide.content && slide.title && <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>}
+                  {slide.content && slide.subtitle && <h3 className="text-3xl text-muted-foreground mb-4 sticky">{slide.subtitle}</h3>}
+                  {slide.content || (
+                    <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
+                      <h1 className="text-7xl font-extrabold z-20">
+                        {slide.title}
+                      </h1>
+                      <h2 className="text-3xl text-muted-foreground z-20">
+                        {slide.subtitle}
+                      </h2>
+                    </div>
+                  )}
                 </SwiperSlide>
               ))
             }

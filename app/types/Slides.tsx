@@ -2,7 +2,8 @@ import { ReactNode } from "react";
 
 export interface SlideT {
     id?: any,
-    title: string;
+    title?: string;
+    subtitle?: string;
     content: ReactNode,
 }
 
