@@ -74,12 +74,12 @@ const Slides: React.FC<SlidesProps> = ({ data } : SlidesProps) => {
             modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation]}
           >
             <div className="absolute right-5 bottom-5 z-10 rounded-full bg-[#f0f0f0aa] backdrop:blur-md p-2 flex items-center gap-2 border-outline border backdrop-blur-xl backdrop-saturate-200">
-              <div ref={prevBtn} className="cursor-pointer" onClick={() => swiperInstance?.slidePrev()}>
+              <div ref={prevBtn} className="cursor-pointer">
                 <ChevronLeft className="aspect-square w-7 h-7 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
               </div>
               {/* <span>{currentSlide}</span> */}
               <AnimatedCounter value={currentSlide || 0} className="bg-[#f0f0f0aa]" />
-              <div ref={nextBtn} className="cursor-pointer" onClick={() => swiperInstance?.slideNext()}>
+              <div ref={nextBtn} className="cursor-pointer">
                 <ChevronRight className="aspect-square w-7 h-7 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
               </div>
             </div>
@@ -88,7 +88,8 @@ const Slides: React.FC<SlidesProps> = ({ data } : SlidesProps) => {
                 <h1 className="text-7xl font-extrabold z-20">
                   Fullstack 101
                 </h1>
-                <span className="text-3xl">A Coffee With Pie</span>
+                <h2><s>又名: 青春猪头少年不会梦到 HTML 是一门编程语言</s></h2>
+                <span className="text-3xl">A Coffee With Pie / GeekPie_</span>
               </div>
               <Universe />
             </SwiperSlide>
