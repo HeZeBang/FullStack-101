@@ -12,7 +12,7 @@ export function AnimatedCounter({ value, digits, className }: { value: number, d
   return (
     <div
       style={{ fontSize }}
-      className={cn("flex space-x-3 overflow-hidden rounded-md bg-card px-2 leading-none text-card-foreground", className)}
+      className={cn("flex space-x-3 overflow-hidden rounded-md bg-card px-2 leading-none text-card-foreground [mask-image:linear-gradient(to_top,transparent_0%,#000_20%,#000_80%,transparent_100%)]", className)}
     >
       {/* <Digit place={100} value={value} /> */}
       <Digit place={10} value={value} />
