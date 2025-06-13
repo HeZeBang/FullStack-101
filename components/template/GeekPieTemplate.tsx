@@ -15,21 +15,34 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { SlidesProps } from "@/lib/props";
 import { EXTRA, SUBTITLE, TITLE } from "@/lib/consts";
+import { useSwiperContext, SwiperProvider } from "@/lib/hooks/useSwiper";
+import SpaceToFadeIn from "../animateIn";
 
-const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
-  const [swiperInstance, setSwiperInstance] = React.useState<SwiperClass | null>(null);
+const SlidesContent: React.FC<SlidesProps> = (props: SlidesProps) => {
+  const {
+    swiperInstance,
+    setSwiperInstance,
+    currentSlide,
+    setCurrentSlide,
+    setTotalSlides
+  } = useSwiperContext();
+
   const nextBtn = React.useRef<HTMLDivElement>(null);
   const prevBtn = React.useRef<HTMLDivElement>(null);
-  const [currentSlide, setCurrentSlide] = React.useState(0);
+
+  useEffect(() => {
+    // Set total slides count
+    setTotalSlides(props.data.length + 2); // +2 for cover and end slide
+  }, [props.data.length, setTotalSlides]);
 
   useEffect(() => {
     if (swiperInstance) {
-      swiperInstance.on('keyPress', (swiper, key) => {
-        console.log("Key pressed:", key, typeof key);
-        if (Number(key) === 32) {
-          swiper.slideNext(); // Slide to the next slide
-        }
-      });
+      // swiperInstance.on('keyPress', (swiper, key) => {
+      //   console.log("Key pressed:", key, typeof key);
+      //   if (Number(key) === 32) {
+      //     swiper.slideNext(); // Slide to the next slide
+      //   }
+      // });
     }
   }, [swiperInstance])
 
@@ -40,7 +53,7 @@ const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
         setCurrentSlide(swiperInstance.activeIndex);
       });
     }
-  }, [swiperInstance]);
+  }, [swiperInstance, setCurrentSlide]);
 
   // const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
   //   console.log("Key pressed:", event.key);
@@ -97,19 +110,27 @@ const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
             </SwiperSlide>
             {
               props.data.map((slide, index) => (
-                <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-14 overflow-auto")} virtualIndex={index + 1}>
-                  {slide.content && slide.title && <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>}
-                  {slide.content && slide.subtitle && <h3 className="text-3xl text-muted-foreground mb-4 sticky">{slide.subtitle}</h3>}
-                  {slide.content || (
-                    <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
-                      <h1 className="text-7xl font-extrabold z-20">
-                        {slide.title}
-                      </h1>
-                      <h2 className="text-3xl text-muted-foreground z-20">
-                        {slide.subtitle}
-                      </h2>
+                <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white")} virtualIndex={index + 1}>
+                  <main className="w-full h-full flex flex-col overflow-auto p-12">
+                    {slide.content && slide.title && <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>}
+                    {slide.content && slide.subtitle && <h3 className="text-3xl text-muted-foreground mb-4 sticky">{slide.subtitle}</h3>}
+                    <div className="flex-grow">
+                      {
+                        (slide.autoAnimate ? (
+                          <SpaceToFadeIn pageNum={index + 1}>{slide.content}</SpaceToFadeIn>
+                        ) : slide.content
+                        ) || (
+                          <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
+                            <h1 className="text-7xl font-extrabold z-20">
+                              {slide.title}
+                            </h1>
+                            <h2 className="text-3xl text-muted-foreground z-20">
+                              {slide.subtitle}
+                            </h2>
+                          </div>
+                        )}
                     </div>
-                  )}
+                  </main>
                 </SwiperSlide>
               ))
             }
@@ -126,6 +147,14 @@ const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
         </ul>
       </div>
     </section>
+  );
+};
+
+const Slides: React.FC<SlidesProps> = (props: SlidesProps) => {
+  return (
+    <SwiperProvider>
+      <SlidesContent {...props} />
+    </SwiperProvider>
   );
 };
 

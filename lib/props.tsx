@@ -5,6 +5,7 @@ export interface SlideT {
     title?: string;
     subtitle?: string;
     content: ReactNode,
+    autoAnimate?: boolean;
 }
 
 export interface SlidesProps {
