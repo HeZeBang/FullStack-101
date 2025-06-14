@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect } from "react";
 
 // Swiper components, modules and styles
-import { Autoplay, EffectCards, EffectCoverflow, HashNavigation, Keyboard, Navigation, Pagination, Virtual } from "swiper/modules";
+import { Autoplay, EffectCards, EffectCoverflow, HashNavigation, History, Keyboard, Navigation, Pagination, Virtual } from "swiper/modules";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
