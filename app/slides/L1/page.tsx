@@ -545,6 +545,29 @@ p { /* 选择器 */
     )
   },
   {
+    title: "属性有什么",
+    content: (<>
+      <MDBlock>{`
+- 常见的属性有很多，你可以在 CSS 中达到几乎所有你想要的效果
+- 常见的有：
+- 布局类
+  - \`width\`: 宽度
+  - \`height\`: 高度
+  - \`margin\`: 外边距
+  - \`padding\`: 内边距
+- 样式类
+  - \`color\`: 颜色
+  - \`background-color\`: 背景颜色
+  - \`border\`: 边框
+  - \`border-radius\`: 圆角
+- 文本类
+  - \`font-size\`: 字体大小
+  - \`font-weight\`: 字体粗细
+  - \`text-decoration\`: 文本装饰
+      `}</MDBlock>
+    </>)
+  },
+  {
     title: "本地尝试！",
     content: (<>
       <MDBlock>{`

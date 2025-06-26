@@ -11,7 +11,7 @@ const SAMPLE_HTML = `
     <li class="item" id="unique-item">项目2</li>
     <li class="item">项目3</li>
   </ul>
-  <button>按钮1</button>
+  <button class="bg-white rounded active:scale-95 hover:shadow-lg p-2 transition-all">按钮1</button>
   <button id="unique-item">按钮2</button>
   <button aria-text="button 3">按钮3</button>
 </div>
@@ -47,7 +47,7 @@ export default function SelectorTester() {
     <div className="max-w-xl mx-auto p-4 space-y-4">
       <input
         className="w-full border rounded px-3 py-2 text-base"
-        placeholder="输入 CSS 选择器，如 .item, h1, .desc"
+        placeholder="输入 CSS 选择器，暂不支持 :hover 等伪类选择器"
         value={selector}
         onChange={(e) => setSelector(e.target.value)}
       />
