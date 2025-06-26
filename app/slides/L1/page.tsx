@@ -8,6 +8,7 @@ import { JSXPreview } from "@/components/ui/jsx-preview";
 import { CircleXIcon } from "lucide-react";
 import CodeBlockWithHeader from "@/components/code";
 import SelectorTester from "@/components/selector";
+import CSSTester from "@/components/css";
 
 const slides = [
   {
@@ -17,7 +18,7 @@ const slides = [
     title: "在 Playground 中创建一个“网页”",
     content: (<>
       <MDBlock>{`
-- 如果你在 1998 年访问一个网页，其实你估计和现在看到的差不多（x
+- 如果你在 1991 年访问一个网页，其实你估计和现在看到的差不多（x
   - 简单的文本
   - 简单的链接
   - 浏览器默认的样式
@@ -72,7 +73,7 @@ const slides = [
     </main>
 
     <footer>
-        <p>&copy; 1998 我的第一个网页. 保留所有权利。</p>
+        <p>&copy; 1991 我的第一个网页. 保留所有权利。</p>
     </footer>
 
 </body>
@@ -223,8 +224,8 @@ footer {
     subtitle: "Cont'd",
     content: (<>
       <MDBlock>{`
-- 现在我们有了个现代的网页，但是底下还是 1998！
-  - 我们要把 1998 替换成现在的年份
+- 现在我们有了个现代的网页，但是底下还是 1991！
+  - 我们要把 1991 替换成现在的年份
 - 尝试在 Javascript 部分，添加这些代码，看看会发生什么？
       `}</MDBlock>
       <CodeBlockWithHeader code={`document.addEventListener('DOMContentLoaded', function() {
@@ -235,7 +236,7 @@ footer {
     const footerP = document.querySelector('footer p');
     if (footerP) {
         // 我们需要找到并替换年份
-        footerP.innerHTML = footerP.innerHTML.replace('1998', \`<span id="current-year">\${new Date().getFullYear()}</span>\`);
+        footerP.innerHTML = footerP.innerHTML.replace('1991', \`<span id="current-year">\${new Date().getFullYear()}</span>\`);
     }
 });`} lang="javascript" header="Javascript" filename="script.js" className="text-xs" />
     </>)
@@ -545,8 +546,22 @@ p { /* 选择器 */
     )
   },
   {
-    title: "属性有什么",
+    title: "ID vs. Class",
     content: (<>
+      <MDBlock>{`
+- ID 选择器是唯一的，一个 ID 只能选择一个元素
+  - ID 的最佳实践是给元素在 HTML 中唯一的 ID，通常用于区别类型一致但是实际不同的元素
+- Class 选择器是通用的，一个 Class 可以被多个元素选择
+  - Class 的最佳实践是给每一组类似的元素统一的 Class
+  - **最佳实践：现代的 CSS 通常是基于 Class 选择的**
+- 通常一个元素只会有一个 ID，但是可以有多个 Class
+- 选择器优先级：内联 > ID > Class > 元素
+      `}</MDBlock>
+    </>)
+  },
+  {
+    title: "属性有什么",
+    content: (<div className="grid grid-cols-2 gap-3">
       <MDBlock>{`
 - 常见的属性有很多，你可以在 CSS 中达到几乎所有你想要的效果
 - 常见的有：
@@ -564,6 +579,25 @@ p { /* 选择器 */
   - \`font-size\`: 字体大小
   - \`font-weight\`: 字体粗细
   - \`text-decoration\`: 文本装饰
+      `}</MDBlock>
+      <CSSTester />
+    </div>)
+  },
+  {
+    title: "把你的 CSS 应用到网页上",
+    content: (<>
+      <MDBlock>{`
+- 内联 CSS
+  - 写在 HTML 标签的 style 属性中
+  - \`<p style="color: red;">...</p>\`
+- 内部 CSS
+  - 写在 \`<head>\` 标签中的 \`<style>\` 标签中
+- 外部 CSS
+  - 写在独立的 CSS 文件中
+  - 通过 \`<link>\` 标签引入
+  - \`rel="stylesheet"\` 指定这是一个样式表文件
+  - \`href="style.css"\` 指定样式表文件的路径
+  - 比如 \`<link rel="stylesheet" href="style.css">\`
       `}</MDBlock>
     </>)
   },
@@ -747,12 +781,69 @@ a[href="#"] {
     </>)
   },
   {
+    title: "Takeaway",
+    content: (<>
+      <MDBlock>{`
+- HTML 是网页的结构
+  - 嵌套的盒子
+  - HTML 语法
+- CSS 是网页的样式
+  - 一系列描述
+  - CSS 语法
+- JS 是网页的行为
+      `}</MDBlock>
+    </>)
+  },
+  {
+    title: "Web 拾遗",
+    subtitle: "网页存活多久？"
+  },
+  {
+    title: "第一个 Web Page",
+    subtitle: "以后你可能会经常看到 www.w3.org",
+    content: (
+      <MDBlock>{`
+- 世界上第一个网页是由蒂姆·伯纳斯-李（Tim Berners-Lee）于1991年8月6日在欧洲核子研究中心（CERN）发布的。
+- 第一个网页非常简单，只有纯文本和蓝色超链接。它解释了万维网（World Wide Web）项目本身是什么，如何设置一个网页浏览器，如何创建自己的网络服务器，以及HTML和HTTP的技术文档。它的主要目的是促进科学家们之间信息的共享。
+- 你仍然可以在 [这里](http://info.cern.ch/hypertext/WWW/TheProject.html) 看到网站的备份。
+- 世界上第一个服务器运行在在CERN的实验室里的 NeXT 电脑上，上面贴着一张字条，写着 **“This machine is a server. DO NOT POWER DOWN!”** ，以确保没有人会不小心关闭它。
+      `}</MDBlock>
+    )
+  },
+  {
     title: "为什么网页存活了这么久？",
     content: (
       <div className="flex justify-center items-center flex-col gap-5 w-full h-full">
         <img src="https://imgs.xkcd.com/comics/installing.png" alt="xkcd 1367" className="h-80" />
       </div>
     )
+  },
+  {
+    title: "Web 的发展",
+    subtitle: "现如今的互联网已经远不同于以前",
+    content: <>
+      <MDBlock>{`
+- Web 1.0 (1990-2000s)
+  - 静态网页
+  - 内容由网站管理员控制
+  - 用户只能被动地浏览
+  - eg. 门户网站（如雅虎、新浪）、个人主页、在线百科全书
+    - 现在很多[课程主页](https://toast-lab.sist.shanghaitech.edu.cn/courses/cs110@shanghaitech/Spring-2025/index.html)也是这样
+- Web 2.0 (2000s-2010s)
+  - 动态网页
+  - 内容由用户生成
+  - 用户可以互动
+  - eg. 社交网络（如 Facebook、Twitter）、博客、论坛、YouTube
+- Web 3.0 (2010s-present)
+  - 智能合约
+  - 去中心化
+  - 区块链
+  - 人工智能
+  - 机器学习
+  - 大数据
+- PWA: 渐进式 Web 应用
+      `}</MDBlock>
+    </>
   }
 ] as SlideT[]
 
