@@ -7,10 +7,238 @@ import { CodeBlockCode } from "@/components/ui/code-block";
 import { JSXPreview } from "@/components/ui/jsx-preview";
 import { CircleXIcon } from "lucide-react";
 import CodeBlockWithHeader from "@/components/code";
+import SelectorTester from "@/components/selector";
 
 const slides = [
   {
     title: "Web 二三事"
+  },
+  {
+    title: "在 Playground 中创建一个“网页”",
+    content: (<>
+      <MDBlock>{`
+- 如果你在 1998 年访问一个网页，其实你估计和现在看到的差不多（x
+  - 简单的文本
+  - 简单的链接
+  - 浏览器默认的样式
+- 在 [MDN Playground](https://developer.mozilla.org/zh-CN/play) 中，找到 HTML 的部分，粘贴以下内容：
+      `}</MDBlock>
+      <CodeBlockWithHeader code={`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的第一个网页</title>
+</head>
+<body>
+
+    <header>
+        <h1>欢迎来到我的网页！</h1>
+        <p>这是一个简单的 HTML 页面。</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">关于我们</a></li>
+            <li><a href="#services">服务</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="about">
+            <h2>关于我们</h2>
+            <p>我们致力于提供高质量的网页内容。这个页面旨在展示纯 HTML 的结构。</p>
+            <p>您可以在这里添加更多关于您自己或您的项目的信息。</p>
+        </section>
+
+        <section id="services">
+            <h2>服务</h2>
+            <ul>
+                <li>HTML 结构设计</li>
+                <li>内容组织</li>
+                <li>基础网页排版</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>联系我们</h2>
+            <p>如果您有任何问题，请随时联系我们：</p>
+            <address>
+                电子邮件: <a href="mailto:your.email@example.com">your.email@example.com</a><br>
+                电话: (123) 456-7890
+            </address>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 1998 我的第一个网页. 保留所有权利。</p>
+    </footer>
+
+</body>
+</html>`} lang="html" header="HTML" filename="index.html" className="text-xs" />
+    </>)
+  },
+  {
+    title: "在 Playground 中创建一个“网页”",
+    subtitle: "Cont'd",
+    content: (<>
+      <MDBlock>{`
+- 时过境迁，现在的 CSS3 已经支持了很多样式
+  - 比如：圆角、阴影、动画、过渡、变换
+  - 如果你现在访问一个网页，那么肯定是有各种样式效果的
+- 尝试在 CSS 部分，添加这些代码，看看会发生什么？
+      `}</MDBlock>
+      <CodeBlockWithHeader code={`/* styles.css */
+
+/* 全局样式 */
+body {
+    font-family: Arial, sans-serif; /* 设置字体 */
+    line-height: 1.6; /* 设置行高 */
+    margin: 0; /* 移除默认外边距 */
+    padding: 0; /* 移除默认内边距 */
+    background-color: #f4f4f4; /* 设置背景颜色 */
+    color: #333; /* 设置文本颜色 */
+}
+
+/* 容器样式 */
+header, nav, main, footer {
+    max-width: 960px; /* 设置最大宽度，保持内容居中 */
+    margin: 0 auto; /* 居中显示 */
+    padding: 20px; /* 设置内边距 */
+}
+
+/* 头部样式 */
+header {
+    background-color: #333; /* 头部背景颜色 */
+    color: #fff; /* 头部文本颜色 */
+    text-align: center; /* 文本居中 */
+    padding: 1rem 0; /* 上下内边距 */
+    border-bottom: 5px solid #77aadd; /* 底部边框 */
+}
+
+header h1 {
+    margin-bottom: 0.5rem; /* 标题下边距 */
+}
+
+/* 导航栏样式 */
+nav {
+    background-color: #444; /* 导航栏背景颜色 */
+    color: #fff; /* 导航栏文本颜色 */
+    padding: 10px 0; /* 上下内边距 */
+    text-align: center; /* 文本居中 */
+}
+
+nav ul {
+    list-style: none; /* 移除列表项目符号 */
+    padding: 0; /* 移除内边距 */
+    margin: 0; /* 移除外边距 */
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: center; /* 居中对齐项目 */
+}
+
+nav ul li {
+    margin: 0 15px; /* 列表项左右外边距 */
+}
+
+nav ul li a {
+    color: #fff; /* 链接颜色 */
+    text-decoration: none; /* 移除下划线 */
+    font-weight: bold; /* 字体加粗 */
+    transition: color 0.3s ease; /* 颜色过渡效果 */
+}
+
+nav ul li a:hover {
+    color: #77aadd; /* 鼠标悬停时链接颜色 */
+}
+
+/* 主内容区样式 */
+main {
+    background-color: #fff; /* 主内容区背景颜色 */
+    padding: 20px; /* 内边距 */
+    margin-top: 20px; /* 上外边距 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    border-radius: 8px; /* 圆角边框 */
+}
+
+main section {
+    margin-bottom: 30px; /* section 下边距 */
+    padding-bottom: 20px; /* section 内下边距 */
+    border-bottom: 1px dashed #ccc; /* 虚线底部边框 */
+}
+
+main section:last-child {
+    border-bottom: none; /* 最后一个 section 没有底部边框 */
+}
+
+main h2 {
+    color: #0056b3; /* H2 标题颜色 */
+    margin-bottom: 15px; /* H2 标题下边距 */
+    border-bottom: 2px solid #77aadd; /* H2 标题底部边框 */
+    padding-bottom: 5px; /* H2 标题底部内边距 */
+}
+
+/* 列表样式 */
+main ul {
+    list-style: disc; /* 恢复默认圆点列表样式 */
+    margin-left: 20px; /* 左外边距 */
+}
+
+main ul li {
+    margin-bottom: 8px; /* 列表项下边距 */
+}
+
+/* 地址样式 */
+address {
+    font-style: normal; /* 恢复正常字体样式 */
+    line-height: 1.8; /* 行高 */
+    margin-top: 15px; /* 上外边距 */
+    background-color: #e9e9e9; /* 背景颜色 */
+    padding: 15px; /* 内边距 */
+    border-left: 5px solid #007bff; /* 左边框 */
+}
+
+address a {
+    color: #007bff; /* 链接颜色 */
+    text-decoration: none; /* 移除下划线 */
+}
+
+address a:hover {
+    text-decoration: underline; /* 鼠标悬停时显示下划线 */
+}
+
+/* 脚注样式 */
+footer {
+    text-align: center; /* 文本居中 */
+    padding: 20px; /* 内边距 */
+    margin-top: 30px; /* 上外边距 */
+    color: #777; /* 文本颜色 */
+    font-size: 0.9em; /* 字体大小 */
+    border-top: 1px solid #ccc; /* 顶部边框 */
+}`} lang="css" header="CSS" filename="styles.css" className="text-xs" />
+    </>)
+  },
+  {
+    title: "在 Playground 中创建一个“网页”",
+    subtitle: "Cont'd",
+    content: (<>
+      <MDBlock>{`
+- 现在我们有了个现代的网页，但是底下还是 1998！
+  - 我们要把 1998 替换成现在的年份
+- 尝试在 Javascript 部分，添加这些代码，看看会发生什么？
+      `}</MDBlock>
+      <CodeBlockWithHeader code={`document.addEventListener('DOMContentLoaded', function() {
+    const yearSpan = document.createElement('span');
+    yearSpan.id = 'current-year';
+    yearSpan.textContent = new Date().getFullYear();
+
+    const footerP = document.querySelector('footer p');
+    if (footerP) {
+        // 我们需要找到并替换年份
+        footerP.innerHTML = footerP.innerHTML.replace('1998', \`<span id="current-year">\${new Date().getFullYear()}</span>\`);
+    }
+});`} lang="javascript" header="Javascript" filename="script.js" className="text-xs" />
+    </>)
   },
   {
     title: "访问网页的过程",
@@ -25,6 +253,7 @@ const slides = [
 - 服务器处理请求
 - 服务器返回 HTML 文档
 - 浏览器解析 HTML
+- 浏览器解析并请求相关资源（外部 JS/CSS/图片等）
 - 浏览器渲染页面
 - 页面加载完成
       `}</MDBlock>
@@ -203,7 +432,30 @@ const slides = [
 
 **Q2.** 为什么不全部都使用 \`<div>\`
 
+- Tips：语义化标签
+
 `}</MDBlock>
+    </>)
+  },
+  {
+    title: "保存到本地！",
+    content: (<>
+      <MDBlock>{`
+- 现在复制下列内容，新建一个文件夹，最好是 \`/fs101/lec1/html/\`
+- 然后新建一个 \`index.html\` 文件，粘贴下列内容
+- 打开看看
+      `}</MDBlock>
+      <CodeBlockWithHeader code={`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <p>This is a <br/> paragraph.</p>
+</body>
+</html>`} lang="html" header="HTML" filename="index.html" className="text-xs" />
     </>)
   },
   {
@@ -230,6 +482,245 @@ const slides = [
 - 尝试理解 CSS 的大致作用
 - 选择一个元素，点击任何一个样式值并修改，看看会发生什么？
       `}</MDBlock>
+    </>)
+  },
+  {
+    title: "CSS 的结构",
+    content: (
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <CodeBlockWithHeader code={`
+p { /* 选择器 */
+  color: red; /* 样式 */
+}
+          `} lang="css" header="CSS" filename="style.css" className="text-xl" />
+        </div>
+        <div>
+          <MDBlock>{`
+- 选择器：选择要应用样式的元素
+- 样式：要应用的样式，分为属性名和属性值，用冒号分开，分号结束
+- 选择器和样式之间用大括号包裹
+- 选择器和样式之间用分号隔开
+          `}</MDBlock>
+        </div>
+      </div>
+    )
+  },
+  {
+    title: "选择器语法",
+    content: (<div className="grid grid-cols-2 gap-3">
+      <MDBlock>{`
+- \`*\`: 选择所有元素（通用选择器）
+- 标签选择器
+  - \`p\`: 选择所有标签为 \`<p>\` 的元素
+- 类选择器
+  - \`.content-box\`: 选择所有类名（class）为 \`content-box\` 的元素
+- ID 选择器
+  - \`#unique-paragraph\`: 选择所有 ID 为 \`unique-paragraph\` 的元素
+- 后代选择器
+  - \`div p\`: 选择所有 \`<div>\` 元素中的 \`<p>\` 元素
+- 子选择器
+  - \`div > p\`: 选择所有直接子元素为 \`<p>\` 的 \`<div>\` 元素
+- **多个选择器可以组合使用**
+  - 比如 \`p.content-box\` 选择所有标签为 \`<p>\` 且类名（class）为 \`content-box\` 的元素
+- **选择器可以有多个，用逗号分开**
+  - 比如 \`p, .content-box\` 选择所有标签为 \`<p>\` 或类名（class）为 \`content-box\` 的元素
+- 更多选择器
+  - 属性选择器
+    - \`[attr="value"]\`: 选择所有 \`attr\` 属性为 \`value\` 的元素
+  - 伪类选择器
+    - \`:hover\`: 选择鼠标悬停的元素
+    - \`:active\`: 选择正在被点击的元素
+    - \`:focus\`: 选择正在被选中的元素
+    - \`:first-child\`: 选择第一个子元素
+    - \`:last-child\`: 选择最后一个子元素
+    - \`:nth-child(n)\`: 选择第 n 个子元素
+  - 相邻兄弟选择器
+    - \`p + p\`: 选择所有紧接在 \`<p>\` 元素之后的 \`<p>\` 元素
+  - 通用兄弟选择器
+    - \`p ~ p\`: 选择所有在 \`<p>\` 元素之后的所有 \`<p>\` 元素
+      `}</MDBlock>
+      <SelectorTester />
+    </div>
+    )
+  },
+  {
+    title: "本地尝试！",
+    content: (<>
+      <MDBlock>{`
+- 现在复制下列内容，新建一个文件夹，最好是 \`/fs101/lec1/css/\`
+- 然后新建一个 \`index.html\` 文件，粘贴下列内容
+- 打开看看
+        `}</MDBlock>
+      <CodeBlockWithHeader code={`<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 基本选择器演示</title>
+    <link rel="stylesheet" href="selectors_demo.css">
+</head>
+<body>
+
+    <header>
+        <h1>CSS 选择器演示</h1>
+    </header>
+
+    <main>
+        <section class="intro-section">
+            <p>这是一个<strong>段落</strong>。</p>
+            <p id="unique-paragraph">这是另一个带 ID 的段落。</p>
+            <ul>
+                <li>列表项一</li>
+                <li class="special-item">列表项二 (特殊)</li>
+                <li>列表项三</li>
+            </ul>
+        </section>
+
+        <div class="content-box">
+            <p>这个段落在一个 div 内部。</p>
+            <a href="#">这是一个链接</a>
+            <span>这是一个 span 元素。</span>
+        </div>
+
+        <p>这是主内容区外的普通段落。</p>
+        <button>点击我</button>
+    </main>
+
+    <footer>
+        <p>页面 footer</p>
+    </footer>
+
+</body>
+</html>`} lang="html" header="HTML" filename="index.html" className="text-sm" />
+      <MDBlock>{`
+- 然后新建一个 \`selectors_demo.css\` 文件，粘贴下列内容
+- 刷新看看
+      `}</MDBlock>
+      <CodeBlockWithHeader code={`/* selectors_demo.css */
+
+/* --- 1. 通用选择器 (*) --- */
+/* 作用：选择页面中的所有元素 */
+* {
+    box-sizing: border-box; /* 确保所有元素的盒模型行为一致 */
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 2. 元素选择器 (标签名) --- */
+/* 作用：根据 HTML 标签名选择元素 */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 20px;
+}
+
+h1 {
+    color: #0056b3;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+li {
+    list-style-type: square; /* 列表项使用方块符号 */
+}
+
+/* --- 3. 类选择器 (.) --- */
+/* 作用：选择具有特定 class 属性的元素 */
+.intro-section {
+    background-color: #e6f7ff;
+    border: 1px solid #99d6ff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.special-item {
+    color: #d9534f; /* 特殊列表项显示红色 */
+    font-weight: bold;
+}
+
+.content-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 5px solid #28a745;
+}
+
+/* --- 4. ID 选择器 (#) --- */
+/* 作用：选择具有特定 id 属性的唯一元素。ID 在一个页面中必须是唯一的。 */
+#unique-paragraph {
+    font-style: italic; /* 唯一的段落显示斜体 */
+    color: #6a0dad; /* 紫色 */
+    border-bottom: 1px dashed #6a0dad;
+    padding-bottom: 5px;
+}
+
+/* --- 5. 后代选择器 (空格) --- */
+/* 作用：选择作为另一个元素后代（子孙）的元素 */
+.intro-section p {
+    font-size: 1.1em; /* 在 intro-section 里的段落字体更大 */
+    color: #007bff;
+}
+
+.content-box p {
+    color: #28a745; /* 在 content-box 里的段落显示绿色 */
+}
+
+/* --- 6. 子选择器 (>) --- */
+/* 作用：选择作为另一个元素直接子元素的元素（不包括孙子辈） */
+ul > li {
+    padding-left: 5px; /* 只有直接子级的 li 才应用这个样式 */
+    border-left: 3px solid #ccc;
+    margin-bottom: 5px;
+}
+
+/* 比较：如果用 ul li，会选择所有后代 li，但这里只有直接子级 */
+
+/* --- 7. 相邻兄弟选择器 (+) --- */
+/* 作用：选择紧邻在另一个元素后面的兄弟元素 */
+h1 + p {
+    text-align: center; /* 紧邻在 h1 后面的第一个 p 居中 */
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* --- 8. 普通兄弟选择器 (~) --- */
+/* 作用：选择位于另一个元素后面，且与该元素具有相同父级的所有兄弟元素 */
+p ~ button {
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    display: block; /* 使按钮占据一行 */
+    margin-left: auto;
+    margin-right: auto; /* 居中 */
+}
+
+/* --- 9. 属性选择器 ([属性名]) --- */
+/* 作用：选择具有特定属性的元素 */
+a[href] {
+    color: #007bff; /* 所有带 href 属性的链接 */
+    text-decoration: none;
+}
+
+/* 属性选择器也可以根据属性值进行匹配 */
+a[href="#"] {
+    font-weight: bold; /* href 值为 "#" 的链接 */
+}
+
+/* 属性值包含某个字符串 (eg: [attr*="value"]) */
+/* 属性值以某个字符串开始 (eg: [attr^="value"]) */
+/* 属性值以某个字符串结束 (eg: [attr$="value"]) */`} lang="css" header="CSS" filename="selectors_demo.css" className="text-sm" />
     </>)
   },
   {
