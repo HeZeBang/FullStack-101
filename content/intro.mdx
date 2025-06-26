@@ -1,0 +1,81 @@
+---
+title: "Introduction to MDX"
+author: "John Doe"
+date: "2025-06-27"
+tags: ["react", "mdx", "introduction"]
+description: "Learn the basics of MDX"
+---
+
+export const greeting = "Welcome to MDX!";
+export const version = "1.0.0";
+
+# Introduction to MDX
+
+{greeting}
+
+This is an introduction to MDX, a powerful format that combines Markdown with JSX.
+
+Version: {version}
+
+## What is MDX?
+
+MDX allows you to write JSX directly in your Markdown documents. This makes it incredibly powerful for creating interactive documentation.
+
+- ✅ Write JSX in Markdown
+- ✅ Import React components
+- ✅ Use variables and expressions
+- ✅ Create interactive content
+
+{/**/}
+
+---
+section: "getting-started"
+level: "beginner"
+---
+
+export const steps = ["Install", "Setup", "Write", "Deploy"];
+
+# Getting Started
+
+Here are the steps to get started with MDX:
+
+{steps.map((step, index) => `${index + 1}. ${step}`).join('\n')}
+
+## Installation
+
+```bash
+npm install next-mdx-remote-client
+```
+
+{/**/}
+
+---
+section: "examples"
+complexity: "intermediate"
+---
+
+export const codeExample = "Interactive Components";
+
+# Examples
+
+Working with {codeExample}
+
+## Code Example
+
+```tsx
+import React from 'react';
+
+const InteractiveComponent = () => {
+  const [count, setCount] = React.useState(0);
+  
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+    </div>
+  );
+};
+```
+
+This shows how you can create interactive components within your MDX content.

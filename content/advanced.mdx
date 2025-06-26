@@ -1,0 +1,90 @@
+---
+title: "Advanced MDX Techniques"
+author: "Jane Smith"
+date: "2025-06-27"
+tags: ["react", "mdx", "advanced"]
+description: "Advanced techniques for working with MDX"
+---
+
+export const advancedFeatures = ["Components", "Hooks", "Context", "State Management"];
+export const difficulty = "Advanced";
+
+# Advanced MDX Techniques
+
+This document covers {difficulty.toLowerCase()} techniques for working with MDX.
+
+## Featured Topics
+
+{advancedFeatures.map((feature, index) => `- ${feature}`).join('\n')}
+
+## Custom Components
+
+You can create custom components and use them directly in your MDX:
+
+```tsx
+const CustomAlert = ({ type, children }) => (
+  <div className={`alert alert-${type}`}>
+    {children}
+  </div>
+);
+```
+
+{/* Section Break */}
+
+---
+section: "state-management"
+topic: "hooks"
+---
+
+export const hookExamples = ["useState", "useEffect", "useContext"];
+
+# State Management in MDX
+
+Working with React hooks in MDX content.
+
+## Available Hooks
+
+{hookExamples.map(hook => `- ${hook}`).join('\n')}
+
+## Example Implementation
+
+```tsx
+import { useState, useEffect } from 'react';
+
+const StatefulComponent = () => {
+  const [data, setData] = useState(null);
+  
+  useEffect(() => {
+    // Fetch data or perform side effects
+  }, []);
+  
+  return <div>Dynamic content: {data}</div>;
+};
+```
+
+{/* Final Section */}
+
+---
+section: "best-practices"
+importance: "high"
+---
+
+export const bestPractices = [
+    "Keep components simple",
+    "Use proper error boundaries",
+    "Optimize performance",
+    "Test your components"
+];
+
+# Best Practices
+
+Essential practices for MDX development:
+
+{bestPractices.map((practice, index) => `${index + 1}. ${practice}`).join('\n')}
+
+## Performance Tips
+
+- Lazy load heavy components
+- Use React.memo for expensive renders
+- Minimize re-renders with proper key usage
+- Profile your components regularly

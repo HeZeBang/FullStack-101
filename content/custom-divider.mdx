@@ -1,0 +1,71 @@
+---
+title: "Custom Divider Example"
+author: "System Demo"
+date: "2025-06-27"
+tags: ["demo", "custom", "divider"]
+description: "Example showing custom section divider"
+sectionDivider: "---SECTION---"
+---
+
+export const customExample = "This uses custom dividers!";
+
+# Custom Section Divider Demo
+
+{customExample}
+
+This document demonstrates how to use a custom section divider defined in the frontmatter.
+
+Instead of the default `{/**/}`, this document uses `---SECTION---` as defined in the `sectionDivider` frontmatter property.
+
+## Features
+
+- Custom divider pattern
+- Configurable per document
+- Flexible regex support
+
+---SECTION---
+
+---
+section: "middle"
+customData: "second section"
+---
+
+
+export const middleContent = "Middle section data";
+
+# Second Section
+
+This is the {middleContent} using the custom divider.
+
+The divider `---SECTION---` was used to separate this from the previous section.
+
+## Code Example
+
+```javascript
+// This is in the second section
+function secondSection() {
+  return "Custom divider working!";
+}
+```
+
+---SECTION---
+
+---
+section: "final"
+isLast: true
+---
+
+export const finalMessage = "Last section with custom divider";
+
+# Final Section
+
+{finalMessage}
+
+This demonstrates that the custom divider pattern works consistently throughout the document.
+
+## Summary
+
+- ✅ Custom divider defined in frontmatter
+- ✅ Multiple sections properly separated
+- ✅ Each section can have its own metadata
+- ✅ Variables work in each section
