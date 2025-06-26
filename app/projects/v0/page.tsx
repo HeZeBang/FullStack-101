@@ -2,7 +2,12 @@ import { Suspense } from "react";
 import { evaluate, type EvaluateOptions } from "next-mdx-remote-client/rsc";
 
 // MDX 内容示例，使用 --- 分割不同的部分
-const mdxContent = `# 第一部分标题
+const mdxContent = `
+---
+title: TEST
+---
+
+# 第一部分标题
 
 这是第一部分的内容，包含一些基本的 Markdown 语法。
 
@@ -12,7 +17,7 @@ const mdxContent = `# 第一部分标题
 - 列表项 2
 - 列表项 3
 
----
+<!---->
 
 # 第二部分标题
 
@@ -26,7 +31,7 @@ function hello() {
 
 > 这是一个引用块
 
----
+<!---->
 
 # 第三部分标题
 
@@ -44,7 +49,7 @@ const Component = () => {
 };
 \`\`\`
 
----
+<!---->
 
 # 第四部分标题
 
@@ -65,6 +70,7 @@ async function MDXSection({ content, index }: { content: string; index: number }
         remarkPlugins: [],
         rehypePlugins: [],
       },
+      parseFrontmatter: true,
       disableExports: true,
       disableImports: true,
     };
@@ -103,7 +109,7 @@ async function MDXSection({ content, index }: { content: string; index: number }
 
 export default async function MDXRenderPage() {
   // 按照 --- 分割 MDX 内容
-  const sections = mdxContent.split('---').map(section => section.trim()).filter(section => section.length > 0);
+  const sections = mdxContent.split('<!---->').map(section => section.trim()).filter(section => section.length > 0);
 
   return (
     <div className="container mx-auto p-6 max-w-4xl">
