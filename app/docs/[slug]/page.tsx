@@ -1,10 +1,34 @@
 import { Suspense } from "react";
 import { evaluate, type EvaluateOptions } from "next-mdx-remote-client/rsc";
+import { getFrontmatter } from "next-mdx-remote-client/utils";
 import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { MDX_SECTION_DIVIDER } from "@/lib/consts";
+import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER } from "@/lib/consts";
+import { LucideMessageSquareWarning } from "lucide-react";
+import Universe from "@/components/magicui/universe";
+
+type TocItem = {
+  id: string;
+  title: string;
+  level: number;
+};
+
+type Scope = {
+  readingTime?: string;
+  toc?: TocItem[];
+};
+
+type Frontmatter = {
+  title: string;
+  author: string;
+  layout?: string;
+  subtitle?: string;
+  date?: string;
+  description?: string;
+  tags?: string[];
+};
 
 interface PageProps {
   params: {
@@ -18,7 +42,7 @@ function getAllSlugs() {
   if (!fs.existsSync(contentDir)) {
     return [];
   }
-  
+
   const files = fs.readdirSync(contentDir);
   return files
     .filter(file => file.endsWith(".mdx"))
@@ -29,41 +53,40 @@ function getAllSlugs() {
 function getMDXContent(slug: string) {
   const contentDir = path.join(process.cwd(), "content");
   const filePath = path.join(contentDir, `${slug}.mdx`);
-  
+
   if (!fs.existsSync(filePath)) {
     return null;
   }
-  
+
   return fs.readFileSync(filePath, "utf8");
 }
 
 // 渲染单个 MDX 部分的组件
 async function MDXSection({ content, index }: { content: string; index: number }) {
   try {
-    const options: EvaluateOptions = {
+    const options: EvaluateOptions<Scope> = {
       mdxOptions: {
         remarkPlugins: [],
         rehypePlugins: [],
       },
       parseFrontmatter: true,
       disableExports: false,
-      disableImports: true,
     };
 
-    const mdxModule = await evaluate({
+    const mdxModule = await evaluate<Frontmatter, Scope>({
       source: content,
       options,
+      components: CUSTOM_COMPONENTS,
     });
 
     const { content: MDXContent, frontmatter, scope } = mdxModule;
 
     return (
-      <div 
-        className={`p-6 rounded-lg border-2 ${
-          index % 2 === 0 
-            ? 'bg-blue-50 border-blue-200' 
-            : 'bg-green-50 border-green-200'
-        }`}
+      <div
+        className={`p-6 rounded-lg border-2 ${index % 2 === 0
+          ? 'bg-blue-50 border-blue-200'
+          : 'bg-green-50 border-green-200'
+          }`}
       >
         {/* 显示部分的 Frontmatter 信息 */}
         {/* {frontmatter && Object.keys(frontmatter).length > 0 && (
@@ -79,9 +102,9 @@ async function MDXSection({ content, index }: { content: string; index: number }
             </div>
           </div>
         )} */}
-        
+
         {/* 显示 Scope 信息 */}
-        {scope && Object.keys(scope).length > 0 && (
+        {/* {scope && Object.keys(scope).length > 0 && (
           <div className="mb-4 p-3 bg-purple-50 border border-purple-200 rounded">
             <h4 className="text-sm font-semibold text-purple-800 mb-2">Variables:</h4>
             <div className="grid grid-cols-2 gap-2">
@@ -93,9 +116,15 @@ async function MDXSection({ content, index }: { content: string; index: number }
               ))}
             </div>
           </div>
-        )}
-        
-        <div className="prose prose-lg max-w-none">
+        )} */}
+
+        <div className="prose max-w-none">
+          <h1 className="prose-h1 font-extrabold z-20">
+            {frontmatter?.title}
+          </h1>
+          <h2 className="prose-h2 text-muted-foreground z-20">
+            {frontmatter?.subtitle}
+          </h2>
           {MDXContent}
         </div>
       </div>
@@ -103,7 +132,7 @@ async function MDXSection({ content, index }: { content: string; index: number }
   } catch (error) {
     return (
       <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-        <h3 className="text-red-800 font-semibold mb-2">渲染错误 (部分 {index + 1})</h3>
+        <h3 className="text-red-800 font-semibold mb-2">渲染错误 (Page {index + 1})</h3>
         <p className="text-red-600 text-sm">
           {error instanceof Error ? error.message : "未知错误"}
         </p>
@@ -123,37 +152,16 @@ export async function generateStaticParams() {
 export default async function DocPage({ params }: PageProps) {
   const { slug } = params;
   const mdxContent = getMDXContent(slug);
-  
+
   if (!mdxContent) {
     notFound();
   }
 
-  // 先提取全局 frontmatter
-  let globalFrontmatter = {};
-  
-  try {
-    const globalOptions: EvaluateOptions = {
-      mdxOptions: {
-        remarkPlugins: [],
-        rehypePlugins: [],
-      },
-      parseFrontmatter: true,
-      disableExports: true,
-      disableImports: true,
-    };
-
-    const globalMdxModule = await evaluate({
-      source: mdxContent,
-      options: globalOptions,
-    });
-
-    globalFrontmatter = globalMdxModule.frontmatter || {};
-  } catch (error) {
-    console.error('Error extracting global frontmatter:', error);
-  }
+  // 使用 getFrontmatter 提取全局 frontmatter 和剥离后的内容
+  const { frontmatter: globalFrontmatter, strippedSource } = getFrontmatter<Frontmatter>(mdxContent);
 
   // 使用固定的分段符常量
-  const sections = mdxContent
+  const sections = strippedSource
     .split(MDX_SECTION_DIVIDER)
     .map(section => section.trim())
     .filter(section => section.length > 0);
@@ -171,11 +179,10 @@ export default async function DocPage({ params }: PageProps) {
             <Link
               key={availableSlug}
               href={`/docs/${availableSlug}`}
-              className={`px-3 py-1 rounded text-sm ${
-                availableSlug === slug
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-blue-600 hover:bg-blue-50 border border-blue-200'
-              }`}
+              className={`px-3 py-1 rounded text-sm ${availableSlug === slug
+                ? 'bg-blue-600 text-white'
+                : 'bg-white text-blue-600 hover:bg-blue-50 border border-blue-200'
+                }`}
             >
               {availableSlug}
             </Link>
@@ -186,12 +193,12 @@ export default async function DocPage({ params }: PageProps) {
       {/* 文档标题和信息 */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">
-          {(globalFrontmatter as any)?.title || slug}
+          {globalFrontmatter?.title || slug}
         </h1>
         <p className="text-gray-600 mb-4">
-          {(globalFrontmatter as any)?.description || `Documentation for ${slug}`}
+          {globalFrontmatter?.description || `Documentation for ${slug}`}
         </p>
-        
+
         {/* 显示全局 Frontmatter 信息 */}
         {/* {globalFrontmatter && Object.keys(globalFrontmatter).length > 0 && (
           <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
@@ -225,11 +232,11 @@ export default async function DocPage({ params }: PageProps) {
           </div>
         )} */}
       </div>
-      
+
       {/* 文档内容部分 */}
       <div className="space-y-6">
         {sections.map((section, index) => (
-          <Suspense 
+          <Suspense
             key={`${slug}-section-${index}`}
             fallback={
               <div className="p-6 bg-gray-100 rounded-lg animate-pulse">
