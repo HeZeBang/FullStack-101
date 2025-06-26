@@ -2,6 +2,7 @@ import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import { evaluate, type EvaluateOptions } from "next-mdx-remote-client/rsc";
+import { MDX_SECTION_DIVIDER } from "@/lib/consts";
 
 // 获取所有 MDX 文件及其元数据
 async function getAllDocuments() {
@@ -37,27 +38,15 @@ async function getAllDocuments() {
 
         const frontmatter = mdxModule.frontmatter || {};
         
-        // 从 frontmatter 中获取分段规则，默认为空注释
-        const sectionDivider = (frontmatter as any)?.sectionDivider || '{/**/}';
-        
-        // 使用自定义的分段规则来分割内容
-        let sectionsCount = 1; // 默认至少有一个部分
-        try {
-          // 创建正则表达式来匹配分段符
-          const dividerRegex = new RegExp(sectionDivider.replace(/[{}()[\].*+?^$|\\]/g, '\\$&'), 'g');
-          const sections = content.split(dividerRegex).filter(s => s.trim().length > 0);
-          sectionsCount = sections.length;
-        } catch (regexError) {
-          console.warn(`Invalid sectionDivider regex for ${file}:`, regexError);
-          // 如果正则表达式无效，回退到默认的分段方式
-          sectionsCount = content.split('{/**/}').filter(s => s.trim().length > 0).length;
-        }
+        // 使用固定的分段符常量
+        const sectionsCount = content
+          .split(MDX_SECTION_DIVIDER)
+          .filter(s => s.trim().length > 0).length;
         
         return {
           slug,
           frontmatter,
-          sectionsCount,
-          sectionDivider: (frontmatter as any)?.sectionDivider || '{/**/}'
+          sectionsCount
         };
       } catch (error) {
         console.error(`Error processing ${file}:`, error);
@@ -65,7 +54,7 @@ async function getAllDocuments() {
           slug,
           frontmatter: { title: slug, error: "Failed to parse" },
           sectionsCount: 0,
-          sectionDivider: '{/**/}'
+          sectionDivider: MDX_SECTION_DIVIDER,
         };
       }
     })
@@ -120,20 +109,13 @@ export default async function DocsIndexPage() {
             
             <div className="flex justify-between items-center text-sm text-gray-500">
               <span>
-                {doc.sectionsCount} section{doc.sectionsCount !== 1 ? 's' : ''}
+                {doc.sectionsCount} page{doc.sectionsCount !== 1 ? 's' : ''}
               </span>
               
               {(doc.frontmatter as any)?.author && (
                 <span>by {(doc.frontmatter as any).author}</span>
               )}
             </div>
-            
-            {/* 显示分段符信息 */}
-            {doc.sectionDivider !== '{/**/}' && (
-              <div className="mt-2 text-xs text-gray-400">
-                Divider: <code className="bg-gray-100 px-1 rounded">{doc.sectionDivider}</code>
-              </div>
-            )}
             
             {(doc.frontmatter as any)?.date && (
               <div className="mt-2 text-xs text-gray-400">

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import { MDX_SECTION_DIVIDER } from "@/lib/consts";
 
 interface PageProps {
   params: {
@@ -65,7 +66,7 @@ async function MDXSection({ content, index }: { content: string; index: number }
         }`}
       >
         {/* 显示部分的 Frontmatter 信息 */}
-        {frontmatter && Object.keys(frontmatter).length > 0 && (
+        {/* {frontmatter && Object.keys(frontmatter).length > 0 && (
           <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
             <h4 className="text-sm font-semibold text-yellow-800 mb-2">Section Metadata:</h4>
             <div className="grid grid-cols-2 gap-2">
@@ -77,7 +78,7 @@ async function MDXSection({ content, index }: { content: string; index: number }
               ))}
             </div>
           </div>
-        )}
+        )} */}
         
         {/* 显示 Scope 信息 */}
         {scope && Object.keys(scope).length > 0 && (
@@ -129,7 +130,6 @@ export default async function DocPage({ params }: PageProps) {
 
   // 先提取全局 frontmatter
   let globalFrontmatter = {};
-  let sectionDivider = '{/**/}'; // 默认分段符
   
   try {
     const globalOptions: EvaluateOptions = {
@@ -148,24 +148,15 @@ export default async function DocPage({ params }: PageProps) {
     });
 
     globalFrontmatter = globalMdxModule.frontmatter || {};
-    
-    // 从 frontmatter 中获取自定义分段符
-    sectionDivider = (globalFrontmatter as any)?.sectionDivider || '{/**/}';
   } catch (error) {
     console.error('Error extracting global frontmatter:', error);
   }
 
-  // 使用自定义分段符分割内容
-  let sections: string[] = [];
-  try {
-    // 创建正则表达式来匹配分段符
-    const dividerRegex = new RegExp(sectionDivider.replace(/[{}()[\].*+?^$|\\]/g, '\\$&'), 'g');
-    sections = mdxContent.split(dividerRegex).map(section => section.trim()).filter(section => section.length > 0);
-  } catch (regexError) {
-    console.warn(`Invalid sectionDivider regex:`, regexError);
-    // 如果正则表达式无效，回退到默认的分段方式
-    sections = mdxContent.split('{/**/}').map(section => section.trim()).filter(section => section.length > 0);
-  }
+  // 使用固定的分段符常量
+  const sections = mdxContent
+    .split(MDX_SECTION_DIVIDER)
+    .map(section => section.trim())
+    .filter(section => section.length > 0);
 
   // 获取所有可用的文档以供导航
   const allSlugs = getAllSlugs();
@@ -202,7 +193,7 @@ export default async function DocPage({ params }: PageProps) {
         </p>
         
         {/* 显示全局 Frontmatter 信息 */}
-        {globalFrontmatter && Object.keys(globalFrontmatter).length > 0 && (
+        {/* {globalFrontmatter && Object.keys(globalFrontmatter).length > 0 && (
           <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
             <h3 className="text-lg font-semibold text-indigo-800 mb-3">Document Info</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -232,15 +223,11 @@ export default async function DocPage({ params }: PageProps) {
               ))}
             </div>
           </div>
-        )}
+        )} */}
       </div>
       
       {/* 文档内容部分 */}
       <div className="space-y-6">
-        <p className="text-sm text-gray-500 mb-4">
-          This document is split into {sections.length} sections using divider: <code className="bg-gray-100 px-1 rounded">{sectionDivider}</code>
-        </p>
-        
         {sections.map((section, index) => (
           <Suspense 
             key={`${slug}-section-${index}`}
