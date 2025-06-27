@@ -1,5 +1,6 @@
 ---
-title: "Lecture 1. HTML/CSS"
+title: "HTML/CSS"
+subtitle: "Fullstack 101 - Lecture 1"
 author: "ZAMBAR He"
 date: "2025-06-27"
 tags: 
@@ -349,7 +350,7 @@ title: 一段 HTML 代码
 ---
 
 
-export const code = `<!DOCTYPE html>
+export const HTMLcode = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -362,7 +363,7 @@ export const code = `<!DOCTYPE html>
 </html>`
 
 <div className="grid grid-cols-2 gap-3">
-  <CodeBlockWithHeader code={code} lang="html" header="HTML" filename="index.html" className="text-xl" />
+  <CodeBlockWithHeader code={HTMLcode} lang="html" header="HTML" filename="index.html" className="text-xl" />
   
   <div className="border-4 rounded p-2 flex flex-col gap-2">
     <div className="bg-gray-200 flex rounded-md px-2 w-20 justify-between items-center">Title</div>
@@ -379,7 +380,7 @@ export const code = `<!DOCTYPE html>
 title: HTML 的结构
 ---
 
-export const code = `<!DOCTYPE html>
+export const HTMLExample = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -421,7 +422,7 @@ export const code = `<!DOCTYPE html>
   </div>
   
   <div className="sticky top-5 z-20 h-fit">
-    <CodeBlockWithHeader code={code} lang="html" header="HTML" filename="index.html" className="text-xl" />
+    <CodeBlockWithHeader code={HTMLExample} lang="html" header="HTML" filename="index.html" className="text-xl" />
   </div>
 </div>
 
@@ -431,13 +432,13 @@ export const code = `<!DOCTYPE html>
 title: 更多 HTML 标签
 ---
 
-export const code = `<tagname attr1="val1" attr2="val2">
+export const HTMLGrammar = `<tagname attr1="val1" attr2="val2">
   <!-- content 
   goes 
   here -->
 </tagname>`
 
-<CodeBlockCode code={code} lang="html" className="text-xl" />
+<CodeBlockCode code={HTMLGrammar} lang="html" className="text-xl" />
 
 - `<div>`: 通用容器，用于分组和布局
 - `<span>`: 行内元素，用于文本样式
@@ -852,7 +853,8 @@ title: Takeaway
 
 ---
 title: Web 拾遗
-subtitle: 网页存活多久？
+subtitle: 网页存活了多久？
+layout: title
 ---
 
 {/*  */}

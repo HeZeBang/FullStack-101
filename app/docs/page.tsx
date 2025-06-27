@@ -83,6 +83,9 @@ export default async function DocsIndexPage() {
             className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-md transition-shadow"
           >
             <div className="mb-4">
+              <span className="text-xs text-muted-foreground">
+                {doc.slug}.mdx
+              </span>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 {(doc.frontmatter as any)?.title || doc.slug}
               </h3>
