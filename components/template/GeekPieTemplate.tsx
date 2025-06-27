@@ -17,6 +17,7 @@ import { SlidesProps } from "@/lib/props";
 import { EXTRA, SUBTITLE, TITLE } from "@/lib/consts";
 import { useSwiperContext, SwiperProvider } from "@/lib/hooks/useSwiper";
 import SpaceToFadeIn from "../animateIn";
+import "./slide.css";
 
 const SlidesContent: React.FC<SlidesProps> = (props: SlidesProps) => {
   const {

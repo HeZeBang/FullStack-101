@@ -12,10 +12,6 @@
   transform-origin: center;
 }
 
-html {
-  font-size: 28px;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
