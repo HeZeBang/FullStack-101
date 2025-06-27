@@ -8,7 +8,7 @@ import Link from "next/link";
 import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER } from "@/lib/consts";
 import { LucideMessageSquareWarning } from "lucide-react";
 import Universe from "@/components/magicui/universe";
-
+import gfm from "remark-gfm";
 type TocItem = {
   id: string;
   title: string;
@@ -66,7 +66,7 @@ async function MDXSection({ content, index }: { content: string; index: number }
   try {
     const options: EvaluateOptions<Scope> = {
       mdxOptions: {
-        remarkPlugins: [],
+        remarkPlugins: [gfm],
         rehypePlugins: [],
       },
       parseFrontmatter: true,

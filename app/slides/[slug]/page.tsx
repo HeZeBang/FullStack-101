@@ -8,7 +8,8 @@ import Link from "next/link";
 import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER } from "@/lib/consts";
 import Slides from "@/components/template/GeekPieTemplate";
 import { SlideT } from "@/lib/props";
-
+import remarkGfm from "remark-gfm";
+import rehypeGithubAlert from 'rehype-github-alert'
 export const dynamic = "force-dynamic";
 
 type TocItem = {
@@ -69,8 +70,8 @@ async function MDXSlide({ content, index }: { content: string; index: number }) 
   try {
     const options: EvaluateOptions<Scope> = {
       mdxOptions: {
-        remarkPlugins: [],
-        rehypePlugins: [],
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [rehypeGithubAlert],
       },
       parseFrontmatter: true,
       disableExports: false,

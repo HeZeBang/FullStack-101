@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-jsx-parser": "^2.4.0",
     "react-markdown": "^10.1.0",
+    "rehype-github-alert": "^1.0.0",
     "remark-gfm": "^4.0.1",
     "shiki": "^3.6.0",
     "swiper": "^10.3.1",
