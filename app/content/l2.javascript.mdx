@@ -91,7 +91,8 @@ title: Javascript 语法
 subtitle: 函数、变量、常量、注释
 ---
 
-```javascript
+<div className="grid grid-cols-2 gap-2">
+```javascript showLineNumbers
 // 这个函数找到两个数字的最大公约数
 const greatestCommonDivisor = (a, b) => {
   while (b !== 0) {
@@ -105,4 +106,142 @@ const greatestCommonDivisor = (a, b) => {
 const x = 50;
 const y = 15;
 const gcd = greatestCommonDivisor(x, y); // 5
+```
+
+- JavaScript 中的每个语句都以分号结尾；
+- 空白字符会被忽略。（但可以提高可读性）
+- 大括号表示代码块的开始和结束。
+- 注释不会影响代码的运行，但你应该使用它们来保持代码库的可读性！
+</div>
+
+{/*  */}
+
+---
+title: 定义变量和常量
+subtitle: let 和 const
+---
+
+<div className="grid grid-cols-2 gap-2">
+```javascript showLineNumbers
+let x = 5;
+let y = 10;
+let z = x + y;
+let s = "string";
+
+s = "another";
+z = 1 + 1;
+```
+
+- `let` 是定义变量的关键字。
+- 单个等号用于变量赋值
+- 变量名是我们能够"赋予"值的标识符
+- 在 JavaScript 中，当你第一次使用变量时，必须声明它
+- 我们使用 `let` 关键字来声明变量。之后，我们可以自由地改变其值
+</div>
+
+
+> [!Note]
+>
+> JavaScript 约定使用 camelCase 命名变量。除了第一个单词外，每个单词都大写。
+
+> [!Warning]
+>
+> 在严格模式下，当变量已经存在时重新用 `let` 声明变量不会工作，但在非严格模式下运行时不会报错
+
+<div className="grid grid-cols-2 gap-2">
+```javascript {2}#red showLineNumbers
+const ans = 42;
+ans = 0; // 报错
+```
+
+- `const` 是定义常量的关键字。
+- 安全代码的最佳实践。不该改的就不能改。
+</div>
+
+{/*  */}
+
+---
+title: let vs. var
+---
+
+> [!Warning]
+>
+> **tl;dr：不要使用 `var`**
+
+- 在 ES6 之前，我们使用 `var` 来定义变量。
+- 现在我们使用 `let` 来定义变量。
+- STFW
+  - `var` 的作用域是函数作用域，而不是块作用域。
+  - `let` 的作用域是块作用域。
+  - `var` 会变量提升，而 `let` 不会。
+  - `var` 可以重复声明变量，而 `let` 不能。
+
+{/*  */}
+
+---
+title: null vs undefined
+---
+
+- `undefined` 表示“声明但未分配值”
+- `null` 表示“没有值”
+  - **最佳实践：** 使用 `null` 来清空一个变量。明确地说变量现在是空的。
+
+```javascript showLineNumbers
+let name; // undefined
+name = "some"; // assigned
+name = null; // no name
+```
+
+{/*  */}
+
+---
+title: 输出
+---
+
+- 我们通常输出到控制台，便于快速调试！
+  - `console.log()`
+  - `console.error()`
+  - `console.warn()`
+  - `console.info()`
+  - `console.debug()`
+- `console.log()` 是最常用的，而且可以接受多个参数，几乎什么都能输出
+  - `console.log("Hello", "world!");`
+  - `console.log("The answer is", 42);`
+  - `console.log("The answer is %d", 42);`
+  - ``console.log(`The answer is ${41 + 1}`);`` (template literals / 格式化字符串)
+- 使用 `alert` 弹窗
+  - `alert("Hello, world!");`
+
+{/*  */}
+
+---
+title: 数组
+subtitle: Array
+---
+
+当你想要存储一系列（理想情况下是相似的）项目时：
+
+```javascript showLineNumbers
+// 初始化
+let pets = ["flower", 42, false, "bird"];
+
+// 访问
+console.log(pets[3]); // "bird"
+
+// 替换
+pets[2] = "hamster"; // ["flower", 42, "hamster", "bird"]
+```
+
+- 数组是可变的，可以存储任何类型的数据
+- 数组是基于 0 的索引，这意味着第一个元素的索引是 0，第二个是 1，依此类推
+
+```javascript showLineNumbers
+// 初始化
+let pets = ["cat", "dog", "guinea pig", "bird"];
+
+// 从末尾删除
+pets.pop(); // ["cat", "dog", "guinea pig"]
+
+// 添加到末尾
+pets.push("rabbit"); // ["cat", "dog", "guinea pig", "rabbit"]
 ```

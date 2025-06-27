@@ -5,38 +5,10 @@ import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { CUSTOM_COMPONENTS, MDX_OPTIONS, MDX_SECTION_DIVIDER } from "@/lib/consts";
+import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER, Frontmatter, Scope, PageProps, EVALUATE_OPTIONS } from "@/lib/consts";
 import Slides from "@/components/template/GeekPieTemplate";
 import { SlideT } from "@/lib/props";
 export const dynamic = "force-dynamic";
-
-type TocItem = {
-  id: string;
-  title: string;
-  level: number;
-};
-
-type Scope = {
-  readingTime?: string;
-  toc?: TocItem[];
-};
-
-type Frontmatter = {
-  title: string;
-  author: string;
-  layout?: string;
-  subtitle?: string;
-  date?: string;
-  description?: string;
-  tags?: string[];
-  extra?: string;
-};
-
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
 
 // 获取所有可用的 MDX 文件
 function getAllSlugs() {
@@ -66,15 +38,9 @@ function getMDXContent(slug: string) {
 // 渲染单个 MDX 部分为 slide 的组件
 async function MDXSlide({ content, index }: { content: string; index: number }) {
   try {
-    const options: EvaluateOptions<Scope> = {
-      mdxOptions: MDX_OPTIONS,
-      parseFrontmatter: true,
-      disableExports: false,
-    };
-
     const mdxModule = await evaluate<Frontmatter, Scope>({
       source: content,
-      options,
+      options: EVALUATE_OPTIONS,
       components: CUSTOM_COMPONENTS,
     });
 
