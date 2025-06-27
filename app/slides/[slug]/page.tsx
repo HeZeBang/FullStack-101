@@ -9,6 +9,8 @@ import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER } from "@/lib/consts";
 import Slides from "@/components/template/GeekPieTemplate";
 import { SlideT } from "@/lib/props";
 
+export const dynamic = "force-dynamic";
+
 type TocItem = {
   id: string;
   title: string;
