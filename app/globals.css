@@ -201,3 +201,9 @@ code [data-highlighted-line-id="yellow"] {
 code [data-highlighted-line-id="blue"] {
   @apply bg-blue-500 bg-opacity-50 border-l-8 border-blue-500;
 }
+
+/* Layout */
+
+.dual-col {
+  @apply md:grid md:grid-cols-2 gap-4;
+}
