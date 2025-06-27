@@ -492,6 +492,49 @@ const printSomething = () => {
 {/*  */}
 
 ---
+title: Practice!
+---
+
+> [!Note]
+>
+> Write a function that takes in an array of temperatures (in Celsius) and outputs an array with all the temperatures converted to Fahrenheit.  
+> DO NOT mutate (change) the input array!  
+> Paste your code into the browser console (or write it directly there) to test.
+> 
+> ```
+> tempF  = tempC * 9/5 + 32
+> ```
+
+{/*  */}
+
+---
+title: Practice!
+subtitle: Cont'd
+---
+
+> [!Note]
+>
+> What if adding:
+> 
+> - Converting an array of Celsius temps to Fahrenheit (what we just did)
+> - Converting an array of Fahrenheit temps to Celsius
+> - Converting an array of Celsius temps to Kelvin
+
+```js showLineNumbers {5}
+const arrCtoF = (arrC) => {
+  const arrF = [];
+    for (let i = 0; i <= arrC.length; i ++) {
+    arrF.push(
+      arrC[i] * 9/5 + 32
+    );
+  }
+    return arrF;
+}
+```
+
+{/*  */}
+
+---
 title: 类
 ---
 
