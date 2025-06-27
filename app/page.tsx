@@ -2,7 +2,9 @@
 
 import { Footer7 } from "@/components/ui/footer-7";
 import { HeroGeometric } from "@/components/ui/shape-landing-hero";
+import { NavBar } from "@/components/ui/tubelight-navbar";
 import { useEffect } from "react";
+import { BookOpenIcon, HomeIcon } from "lucide-react";
 
 import { FaBilibili, FaGithub } from "react-icons/fa6";
 import { LuMail } from "react-icons/lu";
@@ -14,6 +16,10 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
+      <NavBar items={[
+        { name: "Home", url: "/", icon: HomeIcon },
+        { name: "Piazza", url: "/piazza", icon: BookOpenIcon },
+      ]} />
       <HeroGeometric badge="A Coffie With Pie" title1="GeekPie_" title2="Fullstack 101" 
         description="Learn how to build a fullstack web application from scratch."
       />
