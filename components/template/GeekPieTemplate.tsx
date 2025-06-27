@@ -126,7 +126,7 @@ const SlidesContent: React.FC<SlidesProps> = (props: SlidesProps) => {
                       <div className="flex flex-col gap-3 justify-center items-start">
                         {slide.content && slide.title && <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>}
                         {slide.content && slide.subtitle && <h3 className="text-3xl text-muted-foreground mb-4 sticky">{slide.subtitle}</h3>}
-                        <div className="flex-grow">
+                        <div className="flex-grow w-full">
                           {slide.autoAnimate ? (
                             <SpaceToFadeIn pageNum={index + 1}>{slide.content}</SpaceToFadeIn>
                           ) : (

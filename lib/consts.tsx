@@ -2,6 +2,12 @@ import Universe from "@/components/magicui/universe";
 import { MDXComponents } from "next-mdx-remote-client";
 import dynamic from "next/dynamic";
 
+import CodeBlockWithHeader from "@/components/code";
+import SelectorTester from "@/components/selector";
+import CSSTester from "@/components/css";
+import { JSXPreview } from "@/components/ui/jsx-preview";
+import { CodeBlockCode } from "@/components/ui/code-block";
+
 export const TITLE = "FullStack 101" as string;
 export const SUBTITLE = <small><s>又名：Re:从零开始的全栈牛马生活</s><br />2025 Fall</small>;
 export const EXTRA = "A Coffie with Pie / GeekPie_";
@@ -14,7 +20,15 @@ export const CUSTOM_COMPONENTS = {
     Timeline: dynamic(() => import("@/components/ui/timeline"), {
         ssr: false,
     }),
+    CodeBlockWithHeader,
+    SelectorTester: dynamic(() => import("@/components/selector"), {
+        ssr: false,
+    }),
+    CSSTester: dynamic(() => import("@/components/css"), {
+        ssr: false,
+    }),
+    CodeBlockCode,
     wrapper: function ({ children }: React.ComponentPropsWithoutRef<"div">) {
-        return <div className="prose" style={{ maxWidth: "100%" }}>{children}</div>;
+        return <div className="prose w-full" style={{ maxWidth: "100%" }}>{children}</div>;
     },
 } as MDXComponents;

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { JSXPreview } from "./ui/jsx-preview";
 import CodeBlockWithHeader from "./code";

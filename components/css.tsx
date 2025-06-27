@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { JSXPreview } from "./ui/jsx-preview";
 import CodeBlockWithHeader from "./code";
@@ -42,7 +44,7 @@ export default function CSSTester() {
   );
 
   return (
-    <div className="max-w-xl mx-auto p-4 space-y-4">
+    <div className="mx-auto p-4 space-y-4" style={{ maxWidth: "100%"}}>
       <input
         className="w-full border rounded px-3 py-2 text-base"
         placeholder="输入 CSS 选择器，如 .item, h1, .desc"

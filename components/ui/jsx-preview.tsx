@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react"
 import JsxParser from "react-jsx-parser"
 import type { TProps as JsxParserProps } from "react-jsx-parser"
