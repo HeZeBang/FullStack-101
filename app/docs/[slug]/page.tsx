@@ -5,10 +5,9 @@ import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER } from "@/lib/consts";
+import { CUSTOM_COMPONENTS, MDX_OPTIONS, MDX_SECTION_DIVIDER } from "@/lib/consts";
 import { LucideMessageSquareWarning } from "lucide-react";
 import Universe from "@/components/magicui/universe";
-import gfm from "remark-gfm";
 type TocItem = {
   id: string;
   title: string;
@@ -65,10 +64,7 @@ function getMDXContent(slug: string) {
 async function MDXSection({ content, index }: { content: string; index: number }) {
   try {
     const options: EvaluateOptions<Scope> = {
-      mdxOptions: {
-        remarkPlugins: [gfm],
-        rehypePlugins: [],
-      },
+      mdxOptions: MDX_OPTIONS,
       parseFrontmatter: true,
       disableExports: false,
     };
@@ -83,9 +79,9 @@ async function MDXSection({ content, index }: { content: string; index: number }
 
     return (
       <div
-        className={`p-6 rounded-lg border-2 ${index % 2 === 0
-          ? 'bg-blue-50 border-blue-200'
-          : 'bg-green-50 border-green-200'
+        className={`p-6 rounded-lg border-2 ${frontmatter.layout === 'title'
+          ? 'border-blue-200'
+          : 'border-green-200'
           }`}
       >
         {/* 显示部分的 Frontmatter 信息 */}

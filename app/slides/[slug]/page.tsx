@@ -5,11 +5,9 @@ import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER } from "@/lib/consts";
+import { CUSTOM_COMPONENTS, MDX_OPTIONS, MDX_SECTION_DIVIDER } from "@/lib/consts";
 import Slides from "@/components/template/GeekPieTemplate";
 import { SlideT } from "@/lib/props";
-import remarkGfm from "remark-gfm";
-import rehypeGithubAlert from 'rehype-github-alert'
 export const dynamic = "force-dynamic";
 
 type TocItem = {
@@ -69,10 +67,7 @@ function getMDXContent(slug: string) {
 async function MDXSlide({ content, index }: { content: string; index: number }) {
   try {
     const options: EvaluateOptions<Scope> = {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [rehypeGithubAlert],
-      },
+      mdxOptions: MDX_OPTIONS,
       parseFrontmatter: true,
       disableExports: false,
     };

@@ -2,10 +2,12 @@ import Universe from "@/components/magicui/universe";
 import { MDXComponents } from "next-mdx-remote-client";
 import dynamic from "next/dynamic";
 
+import remarkGfm from "remark-gfm";
+import rehypeGithubAlert from 'rehype-github-alert'
+import rehypePrettyCode from 'rehype-pretty-code';
+import { type Options as PrettyCodeOptions } from 'rehype-pretty-code';
+
 import CodeBlockWithHeader from "@/components/code";
-import SelectorTester from "@/components/selector";
-import CSSTester from "@/components/css";
-import { JSXPreview } from "@/components/ui/jsx-preview";
 import { CodeBlockCode } from "@/components/ui/code-block";
 
 export const TITLE = "FullStack 101" as string;
@@ -32,3 +34,10 @@ export const CUSTOM_COMPONENTS = {
         return <div className="prose w-full" style={{ maxWidth: "100%" }}>{children}</div>;
     },
 } as MDXComponents;
+
+export const MDX_OPTIONS = {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeGithubAlert,
+        [rehypePrettyCode, {theme: 'dracula'}]
+    ],
+  }
