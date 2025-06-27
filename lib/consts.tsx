@@ -14,4 +14,7 @@ export const CUSTOM_COMPONENTS = {
     Timeline: dynamic(() => import("@/components/ui/timeline"), {
         ssr: false,
     }),
+    wrapper: function ({ children }: React.ComponentPropsWithoutRef<"div">) {
+        return <div className="prose max-w-full">{children}</div>;
+    },
 } as MDXComponents;

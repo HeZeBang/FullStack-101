@@ -6,8 +6,8 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import { CUSTOM_COMPONENTS, MDX_SECTION_DIVIDER } from "@/lib/consts";
-import { LucideMessageSquareWarning } from "lucide-react";
-import Universe from "@/components/magicui/universe";
+import Slides from "@/components/template/GeekPieTemplate";
+import { SlideT } from "@/lib/props";
 
 type TocItem = {
   id: string;
@@ -28,6 +28,7 @@ type Frontmatter = {
   date?: string;
   description?: string;
   tags?: string[];
+  extra?: string;
 };
 
 interface PageProps {
@@ -61,8 +62,8 @@ function getMDXContent(slug: string) {
   return fs.readFileSync(filePath, "utf8");
 }
 
-// 渲染单个 MDX 部分的组件
-async function MDXSection({ content, index }: { content: string; index: number }) {
+// 渲染单个 MDX 部分为 slide 的组件
+async function MDXSlide({ content, index }: { content: string; index: number }) {
   try {
     const options: EvaluateOptions<Scope> = {
       mdxOptions: {
@@ -81,63 +82,25 @@ async function MDXSection({ content, index }: { content: string; index: number }
 
     const { content: MDXContent, frontmatter, scope } = mdxModule;
 
-    return (
-      <div
-        className={`p-6 rounded-lg border-2 ${index % 2 === 0
-          ? 'bg-blue-50 border-blue-200'
-          : 'bg-green-50 border-green-200'
-          }`}
-      >
-        {/* 显示部分的 Frontmatter 信息 */}
-        {/* {frontmatter && Object.keys(frontmatter).length > 0 && (
-          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
-            <h4 className="text-sm font-semibold text-yellow-800 mb-2">Section Metadata:</h4>
-            <div className="grid grid-cols-2 gap-2">
-              {Object.entries(frontmatter).map(([key, value]) => (
-                <div key={key} className="text-xs">
-                  <span className="font-medium text-yellow-700">{key}:</span>{' '}
-                  <span className="text-yellow-600">{String(value)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )} */}
-
-        {/* 显示 Scope 信息 */}
-        {/* {scope && Object.keys(scope).length > 0 && (
-          <div className="mb-4 p-3 bg-purple-50 border border-purple-200 rounded">
-            <h4 className="text-sm font-semibold text-purple-800 mb-2">Variables:</h4>
-            <div className="grid grid-cols-2 gap-2">
-              {Object.entries(scope).map(([key, value]) => (
-                <div key={key} className="text-xs">
-                  <span className="font-medium text-purple-700">{key}:</span>{' '}
-                  <span className="text-purple-600">{JSON.stringify(value)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )} */}
-
-        <div className="prose max-w-none">
-          <h1 className="prose-h1 font-extrabold my-1">
-            {frontmatter?.title}
-          </h1>
-          <h2 className="prose-h2 text-muted-foreground my-1">
-            {frontmatter?.subtitle}
-          </h2>
-          {MDXContent}
-        </div>
-      </div>
-    );
+    return {
+      title: frontmatter?.title,
+      subtitle: frontmatter?.subtitle,
+      content: MDXContent,
+      layout: frontmatter?.layout || "default",
+      autoAnimate: false,
+    } as SlideT;
   } catch (error) {
-    return (
-      <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-        <h3 className="text-red-800 font-semibold mb-2">渲染错误 (Page {index + 1})</h3>
-        <p className="text-red-600 text-sm">
-          {error instanceof Error ? error.message : "未知错误"}
-        </p>
-      </div>
-    );
+    return {
+      title: `渲染错误 (Slide ${index + 1})`,
+      content: (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+          <h3 className="text-red-800 font-semibold mb-2">渲染错误</h3>
+          <p className="text-red-600 text-sm">
+            {error instanceof Error ? error.message : "未知错误"}
+          </p>
+        </div>
+      ),
+    } as SlideT;
   }
 }
 
@@ -149,7 +112,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function DocPage({ params }: PageProps) {
+export default async function SlidePage({ params }: PageProps) {
   const { slug } = params;
   const mdxContent = getMDXContent(slug);
 
@@ -166,89 +129,49 @@ export default async function DocPage({ params }: PageProps) {
     .map(section => section.trim())
     .filter(section => section.length > 0);
 
+  // 并行处理所有 MDX 部分
+  const slides = await Promise.all(
+    sections.map((section, index) => MDXSlide({ content: section, index }))
+  );
+
   // 获取所有可用的文档以供导航
   const allSlugs = getAllSlugs();
 
   return (
-    <div className="container mx-auto p-6 max-w-6xl">
-      {/* 导航栏 */}
-      <nav className="mb-8 p-4 bg-gray-50 rounded-lg">
-        <h2 className="text-lg font-semibold mb-3">Available Documents</h2>
-        <div className="flex flex-wrap gap-2">
-          {allSlugs.map((availableSlug) => (
+    <div className="w-full h-screen">
+      {/* 添加一个简单的导航栏，可以通过 ESC 键或点击显示 */}
+      <div className="fixed top-4 right-4 z-50 opacity-20 hover:opacity-100 transition-opacity">
+        <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg">
+          <div className="flex flex-wrap gap-1">
+            {/* {allSlugs.map((availableSlug) => (
+              <Link
+                key={availableSlug}
+                href={`/slides/${availableSlug}`}
+                className={`px-2 py-1 rounded text-xs ${availableSlug === slug
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+              >
+                {availableSlug}
+              </Link>
+            ))} */}
             <Link
-              key={availableSlug}
-              href={`/docs/${availableSlug}`}
-              className={`px-3 py-1 rounded text-sm ${availableSlug === slug
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-blue-600 hover:bg-blue-50 border border-blue-200'
-                }`}
+              href={`/docs/${slug}`}
+              className="px-2 py-1 rounded text-xs bg-green-100 text-green-700 hover:bg-green-200"
+              title="View as docs"
             >
-              {availableSlug}
+              📄
             </Link>
-          ))}
-        </div>
-      </nav>
-
-      {/* 文档标题和信息 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">
-          {globalFrontmatter?.title || slug}
-        </h1>
-        <p className="text-gray-600 mb-4">
-          {globalFrontmatter?.description || `Documentation for ${slug}`}
-        </p>
-
-        {/* 显示全局 Frontmatter 信息 */}
-        {/* {globalFrontmatter && Object.keys(globalFrontmatter).length > 0 && (
-          <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
-            <h3 className="text-lg font-semibold text-indigo-800 mb-3">Document Info</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {Object.entries(globalFrontmatter).map(([key, value]) => (
-                <div key={key} className="bg-white p-3 rounded border">
-                  <dt className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                    {key}
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-900">
-                    {key === 'sectionDivider' ? (
-                      <code className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">
-                        {String(value)}
-                      </code>
-                    ) : Array.isArray(value) ? (
-                      <div className="flex flex-wrap gap-1">
-                        {value.map((item, index) => (
-                          <span key={index} className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
-                            {String(item)}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      String(value)
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </div>
           </div>
-        )} */}
+        </div>
       </div>
 
-      {/* 文档内容部分 */}
-      <div className="space-y-6">
-        {sections.map((section, index) => (
-          <Suspense
-            key={`${slug}-section-${index}`}
-            fallback={
-              <div className="p-6 bg-gray-100 rounded-lg animate-pulse">
-                <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-              </div>
-            }
-          >
-            <MDXSection content={section} index={index} />
-          </Suspense>
-        ))}
-      </div>
+      <Slides
+        data={slides}
+        title={globalFrontmatter?.title || slug}
+        subtitle={globalFrontmatter?.subtitle || globalFrontmatter?.description}
+        extra={globalFrontmatter?.extra}
+      />
     </div>
   );
 }
