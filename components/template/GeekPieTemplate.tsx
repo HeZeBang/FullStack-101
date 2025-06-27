@@ -56,6 +56,49 @@ const SlidesContent: React.FC<SlidesProps> = (props: SlidesProps) => {
     }
   }, [swiperInstance, setCurrentSlide]);
 
+  useEffect(() => {
+    if (!swiperInstance) return;
+
+    // hash <-> index 映射
+    const indexToHash = [
+      "cover",
+      ...props.data.map((_, idx) => `slide-${idx}`),
+      "end"
+    ];
+    const hashToIndex = indexToHash.reduce((acc, hash, idx) => {
+      acc[hash] = idx;
+      return acc;
+    }, {} as Record<string, number>);
+
+    // slideChange 时更新 hash
+    const handleSlideChange = () => {
+      const hash = indexToHash[swiperInstance.activeIndex];
+      if (hash && window.location.hash.replace(/^#/, "") !== hash) {
+        window.location.hash = hash;
+      }
+    };
+    swiperInstance.on("slideChange", handleSlideChange);
+
+    // hash 变化时跳转
+    const handleHashChange = () => {
+      if (!swiperInstance) return;
+      const hash = window.location.hash.replace(/^#/, "");
+      const index = hashToIndex[hash];
+      if (typeof index === "number" && swiperInstance.activeIndex !== index) {
+        swiperInstance.slideTo(index, 0);
+      }
+    };
+    window.addEventListener("hashchange", handleHashChange);
+
+    // 初始载入时 hash 定位
+    handleHashChange();
+
+    return () => {
+      swiperInstance.off("slideChange", handleSlideChange);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, [swiperInstance, props.data]);
+
   // const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
   //   console.log("Key pressed:", event.key);
   //   if (event.key === "Space") {
@@ -85,7 +128,9 @@ const SlidesContent: React.FC<SlidesProps> = (props: SlidesProps) => {
             // speed={500}
             autoplay={false}
             loop={false}
-            hashNavigation={true}
+            // hashNavigation={{
+            //   replaceState: true,
+            // }}
             virtual
             modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation, Virtual]}
           >
