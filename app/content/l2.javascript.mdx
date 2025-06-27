@@ -4,8 +4,8 @@ subtitle: "Fullstack 101 - Lecture 2"
 author: "ZAMBAR He"
 date: "2025-06-27"
 tags: 
-    - "fullstack"
     - "javascript"
+    - "OOP"
 description: "JavaScript 基础入门"
 ---
 
@@ -245,3 +245,288 @@ pets.pop(); // ["cat", "dog", "guinea pig"]
 // 添加到末尾
 pets.push("rabbit"); // ["cat", "dog", "guinea pig", "rabbit"]
 ```
+
+{/*  */}
+
+---
+title: 控制流
+---
+
+### 条件语句
+
+- 我们经常希望根据不同的条件执行不同的操作。
+- 为此，我们使用条件运算符 if、else 和 else if：
+
+> [!Note]
+>
+> 注意缩进（tab）！
+>
+> 这不是必需的，但它会使你的代码更具可读性。
+
+```js
+if (hour < 12) {
+  console.log("Good morning!");
+} else if (hour < 16) {
+  console.log("Good afternoon!");
+} else if (hour < 20) {
+  console.log("Good evening!");
+} else {
+  console.log("Good night!");
+}
+```
+
+### `While` 循环：
+
+```javascript
+let z = 1;
+while (z < 1000) {
+  z = z * 2;
+  console.log(z);
+}
+```
+
+### `For` 循环：
+
+```javascript
+const pets = ["cat", "dog", "guinea pig", "bird"];
+
+for (let i = 0; i < pets.length; i++) {
+  const phrase = "I love my " + pets[i];
+  console.log(phrase);
+}
+```
+
+一种更“Pythonic”的迭代方式：
+
+```javascript
+const pets = ["cat", "dog", "guinea pig", "bird"];
+
+for (const pet of pets) {
+  console.log("I love my " + pet);
+}
+```
+
+{/*  */}
+
+---
+title: 面向对象
+subtitle: 和一般的面向对象不同，Javascript 是基于原型的
+layout: title
+---
+
+{/*  */}
+
+---
+title: 对象
+---
+
+- 对象 / Object 是属性的集合
+- 每个属性都有一个名称，描述其含义；以及一个值，描述该对象属性的值。
+- 语法：用大括号括起来，冒号分隔名称和值，逗号分隔值对。允许你将相关数据存储在一个变量中。
+- 可以将它们视为 JavaScript 中相当于 Python 字典的部分。
+- 那么，我们可以用它做什么呢？
+
+```javascript showLineNumbers
+const person = {
+  name: "John",
+  age: 30,
+};
+```
+
+{/*  */}
+
+---
+title: 访问属性、解构
+---
+
+- 如果你知道属性名称，有两种方法可以访问对象属性：
+
+```js
+const myCar = {
+  make: "Ford",
+  model: "Mustang",
+  year: 2005,
+  color: "red"
+};
+
+console.log(myCar.model); // "Mustang"
+console.log(myCar["color"]); // "red"
+```
+
+- 或者你可以通过解构同时获取多个
+
+```js
+const { model, color } = myCar;
+console.log(model, color); // "Mustang" "red"
+```
+
+{/*  */}
+
+---
+title: 等价性？
+subtitle: 又是弱类型魅力时刻
+---
+
+```js
+let arr1 = [1, 2, 3];
+let person1 = {
+  name: "Bill Gates"
+};
+
+let arr2 = [1, 2, 3];
+let person2 = {
+  name: "Bill Gates"
+};
+
+arr1 === arr2; // false!
+person1 === person2; // false!
+```
+
+- `===` 对数组和对象意味着什么？
+  - P.S. `==` 也是一样的结果，但是我们不使用
+
+{/*  */}
+
+---
+title: 对象引用和拷贝
+---
+
+- 对象变量是**引用**
+  - 它们指向数据实际存储的位置
+- Javascript 中，`===` 比较的是**引用**，而不是值，即检查两个数据是否存储在同一位置
+  - Python 仍然会比较值
+
+### 浅拷贝和深拷贝
+
+- 浅拷贝：只拷贝对象的第一层
+- 深拷贝：拷贝对象的所有层
+
+```js
+// Shallow copy
+let arr = [1, 2, 3];
+let copyArr = arr;
+// 修改 copyArr 也会修改 arr
+```
+
+```js
+// Deep copy
+let arr = [1, 2, 3];
+let copyArr = [...arr];
+// 修改 copyArr 不会修改 arr
+```
+
+{/*  */}
+
+---
+title: 函数
+layout: title
+---
+
+{/*  */}
+
+---
+title: 定义函数
+---
+
+```python
+# Python
+celsiusToFahrenheit = lambda tempCelsius: tempCelsius * 9/5 + 32
+```
+
+```js
+// Javascript
+const celsiusToFahrenheit = (tempCelsius) => {
+  const tempFahrenheit = tempCelsius * 9/5 + 32;
+  return tempFahrenheit;
+};
+```
+
+- 这段代码的作用是，为这个函数分配内存空间，然后将函数存储在内存中。
+- 因此，我们在内存的某个地方记录了接收整数温度、进行计算并返回结果的功能。
+- 但为了真正使用这个函数，我们需要**调用**它。
+- 在 JS 中，我们通过将函数赋值给变量来实现这一点。
+- 注意，这里的语法与其他变量完全相同
+- `const`，表示我们不会改变这个变量指向的内容
+
+```js
+const roomTemp = celsiusToFahrenheit(26); // 将 78.8 赋值给 roomTemp
+```
+
+{/*  */}
+
+---
+title: 回调函数
+---
+
+- 在 JavaScript 中，函数可以像其他任何值一样被传递。
+- 这意味着我们可以将一个“回调”函数作为参数传递给另一个函数！
+
+### `setTimeout()`
+
+```js
+const printSomething = () => {
+  console.log("i sleep");
+};
+```
+
+`setTimeout()` 在指定延迟后调用一个函数。它接受 2 个参数：要调用的函数（即回调函数）和延迟时间（以毫秒为单位）。
+
+> 我们如何在 5 秒后打印消息？（多选）
+> 
+> A. `setTimeout(printSomething, 5000);`  
+> B. `setTimeout(printSomething(), 5000);`  
+> C. `setTimeout(() => { console.log("i sleep"); }, 5000);`
+
+### `setInterval()` vs `setTimeout()`
+
+| 特性 | `setInterval()` | `setTimeout()` |
+|------|---------------|--------------|
+| 功能 | 重复调用一个函数，每次调用之间有延迟。 | 设置一个计时器，当计时器结束时执行一个函数。 |
+| 返回值 | 返回一个 `intervalID` ，可以传递给 `clearInterval()` 来终止。 | 返回一个 `timeoutID` ，可以传递给 `clearTimeout()` 来取消。 |
+| 参数 | `func`, `delay`, `arg0`, ..., `argN` | `func`, `delay`, `arg0`, ..., `argN` |
+
+> [!Note]
+>
+> 查看 MDN 获取更多信息！
+
+{/*  */}
+
+---
+title: 类
+---
+
+- 类用于当我们有多个对象都表示同类型事物时。它们允许我们定义该类型或该类中每个对象都具有的属性和方法。
+
+> [!Note]
+> 
+> 别担心，类不会在我们的课堂上使用到！
+
+```javascript 
+class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+
+  getArea = () => {
+    return this.width * this.height;
+  };
+}
+
+const rect = new Rectangle(6, 8);
+console.log(rect.getArea()); // 48
+```
+
+{/*  */}
+
+---
+title: Takeaway
+---
+
+JavaScript 是我们实现功能的关键！
+
+- 使用 `let`, `const` 声明变量。
+- `boolean`, `number`, `string`, `null`, `undefined`
+- 函数、数组、对象、类
+- `if`, `else`, `while`, `for`
+- `setInterval()` vs. `setTimeout()`
