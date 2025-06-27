@@ -38,7 +38,7 @@ interface PageProps {
 
 // 获取所有可用的 MDX 文件
 function getAllSlugs() {
-  const contentDir = path.join(process.cwd(), "content");
+  const contentDir = path.join(process.cwd(), "app", "content");
   if (!fs.existsSync(contentDir)) {
     return [];
   }
@@ -51,7 +51,7 @@ function getAllSlugs() {
 
 // 读取 MDX 文件内容
 function getMDXContent(slug: string) {
-  const contentDir = path.join(process.cwd(), "content");
+  const contentDir = path.join(process.cwd(), "app", "content");
   const filePath = path.join(contentDir, `${slug}.mdx`);
 
   if (!fs.existsSync(filePath)) {

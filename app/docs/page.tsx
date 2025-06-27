@@ -6,7 +6,7 @@ import { MDX_SECTION_DIVIDER } from "@/lib/consts";
 
 // 获取所有 MDX 文件及其元数据
 async function getAllDocuments() {
-  const contentDir = path.join(process.cwd(), "content");
+  const contentDir = path.join(process.cwd(), "app", "content");
   
   if (!fs.existsSync(contentDir)) {
     return [];

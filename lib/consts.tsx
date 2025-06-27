@@ -15,6 +15,6 @@ export const CUSTOM_COMPONENTS = {
         ssr: false,
     }),
     wrapper: function ({ children }: React.ComponentPropsWithoutRef<"div">) {
-        return <div className="prose max-w-full">{children}</div>;
+        return <div className="prose" style={{ maxWidth: "100%" }}>{children}</div>;
     },
 } as MDXComponents;
