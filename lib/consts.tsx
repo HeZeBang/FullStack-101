@@ -10,6 +10,8 @@ import { type Options as PrettyCodeOptions } from 'rehype-pretty-code';
 import CodeBlockWithHeader from "@/components/code";
 import { CodeBlockCode } from "@/components/ui/code-block";
 import { EvaluateOptions } from "next-mdx-remote-client/rsc";
+import { FileIcon, HomeIcon } from "lucide-react";
+import { BookOpenIcon } from "lucide-react";
 
 export const TITLE = "FullStack 101" as string;
 export const SUBTITLE = <small><s>又名：Re:从零开始的全栈牛马生活</s><br />2025 Fall</small>;
@@ -78,3 +80,9 @@ export const EVALUATE_OPTIONS = {
     parseFrontmatter: true,
     disableExports: false,
 } as EvaluateOptions<Scope>;
+
+export const NAVBAR_ITEMS = [
+    { name: "Home", url: "/", icon: HomeIcon },
+    { name: "Piazza", url: "/piazza", icon: BookOpenIcon },
+    { name: "Docs", url: "/docs", icon: FileIcon },
+]
