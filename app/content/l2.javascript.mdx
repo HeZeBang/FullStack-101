@@ -520,6 +520,7 @@ subtitle: Cont'd
 > - Converting an array of Fahrenheit temps to Celsius
 > - Converting an array of Celsius temps to Kelvin
 
+<div className="dual-col">
 ```js showLineNumbers {5}
 const arrCtoF = (arrC) => {
   const arrF = [];
@@ -531,6 +532,120 @@ const arrCtoF = (arrC) => {
     return arrF;
 }
 ```
+
+```js showLineNumbers {5}
+const arrAtoB = (arrA, AtoB) => {
+  const arrB = [];
+    for (let i = 0; i <= arrA.length; i ++) {
+    arrB.push(
+      AtoB(arrA[i])
+    );
+  }
+    return arrB;
+}
+```
+</div>
+
+```js
+const arrCtoF = arrAtoB(arrC, (tempC) => tempC * 9/5 + 32);
+```
+
+### `map`
+
+```js
+const arr = [1, 2, 3, 4, 5];
+const arr2 = arr.map((x) => x * 2); // [2, 4, 6, 8, 10]
+```
+
+{/*  */}
+
+---
+title: 更加函数式！
+subtitle: 更加数学化的函数
+---
+
+- 函数式编程是一种编程范式，它将计算视为数学函数的求值，并避免改变状态和可变数据。
+- Eg. `f(x) = x + 1` 是一个函数，它接受一个输入 `x` 并返回一个输出 `x + 1`，这个函数没有**副作用**，即它不会改变任何外部状态，也不会因为外部状态的改变而改变自己的输出。
+
+```js
+const addOne = (x) => x + 1;
+```
+
+- 纯粹的函数式编程主要强调以下几点
+  - 函数是一等公民：函数可以作为参数传递给其他函数，也可以作为返回值返回。
+  - 只用表达式，不用语句：每一步都是有返回值的运算。
+  - 无副作用：函数不会改变任何外部状态，也不会因为外部状态的改变而改变自己的输出。（I/O 也是副作用，所以函数式编程中通常会把 I/O 减少到最小）
+  - 引用透明：只依赖于输入的参数，任何时候只要参数相同，引用函数所得到的返回值总是相同的。
+- 我们这里主要介绍 Javascript 中函数式的思想的具体运用，这将有助于我们未来使用 React 的 Hooks 和 Functional Components。
+
+### 函数链
+
+- Javascript 中有许多高阶函数，它们接受函数作为参数，并返回一个新函数。
+  - Eg. `map`, `filter`, `reduce`
+  - 甚至在网络请求中，我们也可以用 `fetch(...).then(...).catch(...).finally(...)` 来链式调用。
+- 接受一个函数作为参数，对数组中的每个元素应用该函数，并返回一个新数组。
+- 不会改变原数组，而是返回一个新数组。
+- 可以链式调用。
+
+```js
+const arr = [1, 2, 3, 4, 5];
+const arr2 = arr.map((x) => x * 2).filter((x) => x > 5); // [6, 8, 10]
+```
+
+```js
+// reduce
+const sum = arr.reduce((acc, x) => acc + x, 0); // 15
+```
+
+{/*  */}
+
+---
+title: 回调函数的实际运用
+---
+
+### `addEventListener`
+
+- 接受两个参数：事件类型和回调函数。
+- 回调函数会在事件发生时被调用。
+
+```js
+// 按钮在点击时会调用回调函数
+const button = document.querySelector("button");
+button.addEventListener("click", () => {
+  console.log("clicked");
+});
+```
+
+```js
+// 窗口在按下按键时会调用回调函数
+window.addEventListener("keydown", (event) => {
+  console.log(event.key);
+});
+```
+
+More at [MDN - `addEventListener`](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener)
+
+### `fetch`
+
+- 接受一个 URL 作为参数，返回一个 Promise。
+- 可以链式调用。
+
+```js
+await fetch("/api/v1/test")
+  .then((response) => response.json())
+  .then((data) => console.log("Data:", data))
+  .catch((error) => console.error("Error:", error))
+  .finally(() => console.log("Done."));
+```
+
+More at [MDN - `fetch`](https://developer.mozilla.org/zh-CN/docs/Web/API/fetch)
+
+### 思考题
+
+> 这个是什么？
+> ```js
+> const [count, setCount] = useState(0);
+> ```
 
 {/*  */}
 

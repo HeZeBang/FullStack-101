@@ -65,7 +65,7 @@ export function NavBar({ items, className }: NavBarProps) {
                 isActive && "bg-muted text-primary",
               )}
             >
-              <span className="hidden md:inline">{item.name}</span>
+              <span className="hidden md:inline" style={{ textShadow: "0 0 10px white" }}>{item.name}</span>
               <span className="md:hidden">
                 <Icon size={18} strokeWidth={2.5} />
               </span>
