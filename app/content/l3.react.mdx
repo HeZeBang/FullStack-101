@@ -16,6 +16,13 @@ description: "关于 Node.js, NPM, React, TailwindCSS, Next.js 的一切"
 {/*  */}
 
 ---
+title: Project v0 Released!
+subtitle: Remember to checkout and start the project!
+---
+
+{/*  */}
+
+---
 title: 复习
 ---
 
@@ -26,8 +33,142 @@ title: 复习
 {/*  */}
 
 ---
+title: 复习
+subtitle: CSS 和排版
+---
+
+- 还记得我们之前做的聊天软件界面吗 https://play.tailwindcss.com/OUUQFgwJMR?file=css
+- 我们复制了很多个 `div` 来实现多个聊天气泡
+- 如果我们要实现一个可以**动态修改**和**内容不同**的聊天气泡列表，我们可能需要复制更多的 `div`
+- 然后一个个找到要修改的元素……
+
+{/*  */}
+
+---
 title: 传统 HTML 的大麻烦
+layout: title
 ---
 
 {/*  */}
 
+---
+title: 传统 HTML 的大麻烦
+---
+
+- 在 Web 1.0 时代，我们使用 HTML 来描述网页的结构
+- 这时的互联网还很简单，网页内容相对固定
+- 但是随着互联网的发展，网页内容变得越来越多样化
+- 我们希望网页内容可以动态变化
+- 于是我们引入了 Javascript 来操作 DOM
+- https://play.tailwindcss.com/IzstdqILRM
+
+> [!Note]
+>
+> **DOM**: Document Object Model
+>
+> - 它是加载在浏览器中的文档模型，可以将文档表示为节点树，或称 DOM 树
+> - 它是一个树状结构，每个节点都是一个对象，表示文档中的一个元素
+>
+> More at [MDN](https://developer.mozilla.org/zh-CN/docs/Glossary/DOM)
+
+{/*  */}
+
+---
+title: 操作 DOM
+---
+
+<div className="dual-col">
+
+    <div>
+
+        - 获取 DOM 节点
+            - `document.getElementById('message')`: 获取 id 为 `message` 的节点
+            - `document.getElementsByClassName('message')`: 获取 class 为 `message` 的所有节点
+            - `document.getElementsByTagName('div')`: 获取标签为 `div` 的所有节点
+            - `document.querySelector('#message')`: 获取 id 为 `message` 的节点
+            - `document.querySelectorAll('.message')`: 获取 class 为 `message` 的所有节点
+        - 修改 DOM 的节点内容
+            - `element.innerHTML`: 修改节点内的 HTML 内容
+            - `element.textContent`: 修改节点内的文本内容
+            - `element.style.color`: 修改节点内的样式
+            - `element.style.backgroundColor`: 修改节点内的样式
+            - `element.style.fontSize`: 修改节点内的样式
+            - `element.style.fontWeight`: 修改节点内的样式
+            - `element.style.fontFamily`: 修改节点内的样式
+
+    </div>
+
+    <div>
+
+        > <div id="message">修改这里</div>
+
+        ```javascript
+        // 修改 innerHTML
+        const message = document.getElementById('message');
+        message.innerHTML = 'Hello, World!';
+        ```
+
+        ```javascript
+        // 添加 attribute
+        const message = document.getElementById('message');
+        message.setAttribute('class', 'bg-red-500 text-white');
+        ```
+
+        ```javascript
+        // https://play.tailwindcss.com/IzstdqILRM
+        // 创建消息容器
+        const messageContainer = document.createElement('div');
+        messageContainer.classList.add('message-container', 'message', 'right'); // 默认发送方是自己 (right)
+
+        // 创建气泡
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.textContent = messageText;
+
+        // 创建头像
+        const avatar = document.createElement('img');
+        avatar.classList.add('avatar');
+        avatar.src = 'https://via.placeholder.com/40/3366FF/FFFFFF?text=我'; // 我的头像
+        avatar.alt = '我的头像';
+
+        // 组合消息元素
+        messageContainer.appendChild(bubble);
+        messageContainer.appendChild(avatar);
+
+        // 添加到聊天区域
+        chatArea.appendChild(messageContainer);
+
+        // 清空输入框
+        messageInput.value = '';
+        ```
+
+    </div>
+</div>
+
+{/*  */}
+
+---
+title: 操作 DOM
+---
+
+- 仍然过于麻烦
+- 能否有一种方式，让我们可以**封装**成一个 `<Message />` 组件，然后**复用**这个组件？
+    - Fake HTML Tag!!!
+
+```jsx
+<div>
+    <NavBar />
+    <div>
+        <Message content="Hello, World!" />
+        <Message content="Cont'd" />
+        <Message content="End!s" />
+    </div>
+    <TextArea />
+</div>
+```
+
+{/*  */}
+
+---
+title: React
+---
