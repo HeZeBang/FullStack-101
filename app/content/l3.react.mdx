@@ -221,12 +221,26 @@ title: 组件的结构
 title: 通过 Props 传递数据
 ---
 
-- 在组件中，我们通过 `props` 来传递数据
-- `props` 由父元素传递给子元素，是一个单向的数据流
-- 例如，我们的 `<MessagesArea />` 组件里面包含了我们的 `<Message />` 组件
-- 我们只需要在 `<MessagesArea />` 组件中传递 `messages` 这个 `props` 给 `<Message />` 组件
-- 在 `<Message />` 组件中，我们就可以通过 `props` 来获取 `messages` 这个数据
+<div className="dual-col">
+
+    <div>
+
+        - 在组件中，我们通过 `props` 来传递数据
+        - `props` 由父元素传递给子元素，是一个单向的数据流
+        - 例如，我们的 `<MessagesArea />` 组件里面包含了我们的 `<Message />` 组件
+        - 我们只需要在 `<MessagesArea />` 组件中传递 `messages` 这个 `props` 给 `<Message />` 组件
+        - 在 `<Message />` 组件中，我们就可以通过 `props` 来获取 `messages` 这个数据
+
+    </div>
+
+    <MessageDemo />
+
+</div>
+
 
 ```jsx
-<Message />
+<Message message="..." sender="..." time="..." avatar="..." />
 ```
+
+{/*  */}
+

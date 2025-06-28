@@ -62,6 +62,12 @@ export const CUSTOM_COMPONENTS = {
     CSSTester: dynamic(() => import("@/components/css"), {
         ssr: false,
     }),
+    JSXPreview: dynamic(() => import("@/components/ui/jsx-preview").then(mod => mod.JSXPreview), {
+        ssr: false,
+    }),
+    MessageDemo: dynamic(() => import("@/components/ui/message-demo"), {
+        ssr: false,
+    }),
     CodeBlockCode,
     wrapper: function ({ children }: React.ComponentPropsWithoutRef<"div">) {
         return <div className="prose w-full" style={{ maxWidth: "100%" }}>{children}</div>;
