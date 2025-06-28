@@ -172,3 +172,61 @@ title: 操作 DOM
 ---
 title: React
 ---
+
+- A JavaScript Library for building user interfaces
+- ![React Loco](https://react.dev/_next/image?url=%2Fimages%2Fuwu.png&w=384&q=75)
+- "Create user interfaces from **components**"
+- [Official Site](https://react.dev/)
+- Fake HTML Tag === React Components
+
+{/*  */}
+
+---
+title: 组件
+---
+
+- React 的 Logo是一个原子
+- 质子组成了原子，原子组成了分子
+- 在 React 中，我们的组件组成了组件，最后封装在最大的 `<App />` 组件中
+- ![App](/reactapp.png)
+- React 是一个框架，它允许你将网站拆分成可重用的组件。
+- 每个组件都类似于你定义的“自定义 HTML 标签”。
+- 组件是一系列 HTML/CSS/JavaScript 的抽象。
+- 组件可以构建成树状层次结构。
+
+{/*  */}
+
+---
+title: 组件的结构
+---
+
+<div className="dual-col">
+
+    <div>
+        - 例如，我们想实现一个消息气泡的组件
+        - ![Message](/message.png)
+    </div>
+
+    <div>
+        - 可以变成这样的骨架
+        - ![Message](/message-skeleton.png)
+    </div>
+
+</div>
+
+- 假设你已经完成了排版布局等操作，接下来我们只给这个组件**填充数据**就好
+- 如何传递？
+
+---
+title: 通过 Props 传递数据
+---
+
+- 在组件中，我们通过 `props` 来传递数据
+- `props` 由父元素传递给子元素，是一个单向的数据流
+- 例如，我们的 `<MessagesArea />` 组件里面包含了我们的 `<Message />` 组件
+- 我们只需要在 `<MessagesArea />` 组件中传递 `messages` 这个 `props` 给 `<Message />` 组件
+- 在 `<Message />` 组件中，我们就可以通过 `props` 来获取 `messages` 这个数据
+
+```jsx
+<Message />
+```
